@@ -2,6 +2,8 @@
 (() => {
 'use strict';
 const rows = [
+["Reinforcement learning","Aprendizado por reforço","Aprendizaje por refuerzo"],
+["Interactive demo","Demonstração interativa","Demostración interactiva"],
 ["Research | Fernando Barbosa","Pesquisa | Fernando Barbosa","Investigación | Fernando Barbosa"],
 ["Academic research","Pesquisa acadêmica","Investigación académica"],
 ["From economics to decision science.","Da economia à ciência da decisão.","De la economía a la ciencia de las decisiones."],
