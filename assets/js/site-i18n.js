@@ -2,6 +2,24 @@
 (() => {
 'use strict';
 const rows = [
+["reported increase in checkout conversion","aumento reportado na conversão do checkout","aumento reportado en la conversión del checkout"],
+["Selected career impact and scale · documented in CVs and project accounts.","Impacto e escala da carreira · documentados em currículos e relatos de projetos.","Impacto y escala profesional · documentados en currículos y relatos de proyectos."],
+["Hierarchical forecasting","Previsão hierárquica","Previsión jerárquica"],
+["Optimization","Otimização","Optimización"],
+["Cloud architecture","Arquitetura em nuvem","Arquitectura en la nube"],
+["Recommendations & search","Recomendações e busca","Recomendaciones y búsqueda"],
+["Online experimentation","Experimentação online","Experimentación en línea"],
+["Credit scoring","Modelagem de crédito","Modelado crediticio"],
+["Feature engineering","Engenharia de atributos","Ingeniería de variables"],
+["Origination simulation","Simulação de originação","Simulación de originación"],
+["Graph modeling","Modelagem de grafos","Modelado de grafos"],
+["Churn prediction","Previsão de churn","Predicción de abandono"],
+["Text analytics","Análise de texto","Análisis de texto"],
+["Statistical forecasting","Previsão estatística","Previsión estadística"],
+["Customer insights","Inteligência de clientes","Inteligencia de clientes"],
+["Implemented and analyzed online experiments on checkout pages, with a 15% increase in conversion reported in my OfferFit CV.","Implementei e analisei experimentos online em páginas de checkout, com aumento de 15% na conversão reportado no meu currículo OfferFit.","Implementé y analicé experimentos en línea en páginas de checkout, con un aumento del 15% en conversión reportado en mi currículo OfferFit."],
+["My OfferFit CV reports a 15% increase in checkout conversion from online experiments I implemented and analyzed at Grupo SBF. The CV does not include the baseline conversion rate, experiment dates or sample sizes; this is a CV-reported result.","Meu currículo OfferFit relata um aumento de 15% na conversão do checkout a partir de experimentos online que implementei e analisei no Grupo SBF. O currículo não inclui a taxa de conversão inicial, as datas dos experimentos ou os tamanhos das amostras; trata-se de um resultado reportado no currículo.","Mi currículo OfferFit reporta un aumento del 15% en la conversión del checkout a partir de experimentos en línea que implementé y analicé en Grupo SBF. El currículo no incluye la tasa de conversión inicial, las fechas de los experimentos ni los tamaños de muestra; es un resultado reportado en el currículo."],
+["Source: Fernando Barbosa - OfferFit.docx and matching PDF · Grupo SBF · Online Experimentation & User Experience.","Fonte: Fernando Barbosa - OfferFit.docx e PDF correspondente · Grupo SBF · Online Experimentation & User Experience.","Fuente: Fernando Barbosa - OfferFit.docx y PDF correspondiente · Grupo SBF · Online Experimentation & User Experience."],
   [
     "Home",
     "Início",
