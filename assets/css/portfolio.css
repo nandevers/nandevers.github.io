@@ -227,3 +227,25 @@ body #reconciliation>.demo-controls{display:grid;grid-template-columns:minmax(18
 @keyframes connection-reveal{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
 @media(prefers-reduced-motion:reduce){.practice-connections path{animation:none}.map-point{transition:none}}
 @media(max-width:650px){.xper-team{grid-template-columns:1fr;gap:20px}}
+
+/* Experiment workbench and economics research. */
+.xper-impact{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;margin:26px 0}
+.xper-impact article{border-top:2px solid var(--blue);padding-top:18px}.xper-impact strong{display:block;font:42px/1.15 Georgia,serif;color:var(--navy);margin-bottom:12px}.xper-impact h3{font-size:19px;margin-bottom:12px}.xper-impact p{font-size:15px}
+.suite-diagram{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0}.suite-diagram div{border:1px solid var(--line);border-top:3px solid var(--blue);padding:18px 12px;background:var(--wash);text-align:center}
+.lab-notice{padding:18px;background:var(--wash);border-left:3px solid var(--blue);font-size:14px}
+.lab-config{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:24px 0}
+.lab-config label{display:grid;gap:8px;font-size:13px}.lab-config select{width:100%;min-height:44px;padding:9px;border:1px solid var(--line);background:white;color:var(--ink);font:inherit}
+.lab-config .lab-check{grid-column:1/-1;display:flex;align-items:center;gap:10px}.lab-check input{width:18px;height:18px}
+#lab-data-info{font-size:13px;color:var(--muted);margin-bottom:12px}.lab-input{border:1px solid var(--line);padding:14px}.lab-input summary{cursor:pointer}
+.lab-actions{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}
+#xper-demo button{cursor:pointer;font:inherit;border:1px solid var(--line);padding:9px 14px;border-radius:3px}
+#xper-demo button:not(.primary){color:var(--blue);background:white}#xper-demo button:focus-visible{outline:3px solid #315eaa;outline-offset:3px}
+#lab-status{min-height:3em;font-size:14px;color:var(--muted)}
+.lab-table-scroll{overflow-x:auto;margin:18px 0}.lab-table-scroll table{border-collapse:collapse;width:100%;font-size:13px;text-align:left}.lab-table-scroll th,.lab-table-scroll td{padding:12px;border-bottom:1px solid var(--line);white-space:nowrap}.lab-table-scroll thead{background:var(--wash)}.lab-table-scroll .selected{background:#edf3f9}
+#lab-report{border:1px solid var(--line);padding:24px;margin:24px 0}#lab-report h4{font-size:19px}#lab-report svg{width:100%;max-width:600px;display:block;margin-top:18px}#lab-report svg text{font:12px Arial;fill:#586374}
+.lab-report-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.lab-report-grid dt{font-size:12px;color:var(--muted)}.lab-report-grid dd{margin:6px 0;font-size:15px}
+.fdi-award{display:grid;grid-template-columns:100px 1fr;gap:24px;padding:28px;background:#f3f6fa;border-left:3px solid var(--blue);margin:20px 0 42px}.fdi-award h2{font-size:30px;margin-bottom:18px}
+.fdi-stages{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin:28px 0}.fdi-stages article{border-top:2px solid var(--blue);padding-top:22px}.fdi-stages h3{margin-bottom:18px}.fdi-study-title{font-weight:600}
+.fdi-process{display:flex;align-items:center;gap:20px;margin:24px 0}.fdi-process span{flex:1;padding:20px;background:var(--wash)}.fdi-process i{font-style:normal;color:var(--blue)}
+.fdi-preview{display:flex;flex-direction:column;justify-content:center;gap:14px;padding:24px;background:var(--wash)}.fdi-preview strong{font:38px Georgia,serif;color:var(--navy)}.fdi-preview span{font-size:13px}
+@media(max-width:700px){.lab-config,.xper-impact,.fdi-stages,.lab-report-grid{grid-template-columns:1fr}.suite-diagram{grid-template-columns:1fr 1fr}.fdi-award{grid-template-columns:1fr}.fdi-process{flex-direction:column;align-items:stretch;gap:8px}.fdi-process i{transform:rotate(90deg);align-self:center}}
