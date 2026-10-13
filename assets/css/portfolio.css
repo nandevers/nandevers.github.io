@@ -50,3 +50,16 @@ figure{margin:0}figcaption{font-size:12px;color:var(--muted);line-height:1.6;mar
 @media(max-width:440px){.career-photo-grid{grid-template-columns:1fr}.career-photo-grid img{height:auto;max-height:420px;object-fit:contain}}
 
 .company-strip{display:grid}.company-strip>a{flex-direction:column;justify-content:center;text-align:center}.timeline-index>a{display:flex}.company-strip .brand-pair .company-logo{width:56px;height:36px}
+
+/* Career navigation: equal logo bays, numbered milestones, clear rhythm. */
+.timeline-index{gap:18px;margin:12px 0 56px;counter-reset:career}
+.timeline-index>a{position:relative;display:flex;align-items:flex-start;gap:14px;padding:25px 22px 22px;background:#fff;border:1px solid var(--line);border-top:3px solid #c8d4e7;border-radius:6px;text-decoration:none;min-height:155px;box-shadow:0 3px 12px rgba(8,27,65,.025)}
+.timeline-index>a:hover,.timeline-index>a:focus-visible{border-color:var(--blue);background:#f5f8fd}
+.timeline-index>a>.company-logo,.timeline-index>a>.brand-pair{height:48px;width:calc(100% - 22px);object-fit:contain;object-position:left center;justify-content:flex-start}
+.timeline-index>a>.company-logo{max-width:90px}
+.timeline-index .brand-pair .company-logo{width:54px;height:38px;object-fit:contain}
+.timeline-index .timeline-step{position:absolute;top:15px;right:15px;color:#73829b;font-size:10px;letter-spacing:.08em}
+.timeline-index strong{font-size:14px;line-height:1.4}
+.timeline-index small{margin-top:6px;font-size:12px;letter-spacing:.015em}
+.career-moments{margin:38px 0 0;padding:45px 0 55px;border-top:1px solid var(--line);border-bottom:0}
+@media(max-width:650px){.timeline-index{gap:12px}.timeline-index>a{padding:22px 15px 18px;min-height:150px}.timeline-index .brand-pair{gap:6px}.timeline-index .brand-pair .company-logo{width:42px}.timeline-index strong{font-size:13px}}
