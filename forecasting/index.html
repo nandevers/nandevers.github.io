@@ -1,0 +1,121 @@
+---
+layout: default
+title: Hierarchical Forecasting — Fernando Barbosa
+permalink: /forecasting/
+---
+<div class="portfolio-content forecasting-page">
+  <nav class="portfolio-nav" aria-label="Forecasting page navigation">
+    <a href="/">← Fernando Barbosa</a>
+    <a href="#reconciliation">Interactive demonstration</a>
+  </nav>
+  <main>
+    <section class="forecast-hero">
+      <div>
+        <p class="label">FIELD NOTE / HIERARCHICAL FORECASTING</p>
+        <h1>Forecasts that <em>add up.</em></h1>
+        <p class="forecast-lede">A forecast is a decision system when every level must agree: the global outlook, the business unit, and the underlying series.</p>
+        <a class="button primary" href="#reconciliation">Explore forecast reconciliation ↓</a>
+      </div>
+      <div class="hierarchy-art" aria-label="Illustration of a total forecast connected to two groups and four component series">
+        <div class="tree-root">GLOBAL TOTAL</div>
+        <div class="tree-branches"><span>GROUP A</span><span>GROUP B</span></div>
+        <div class="tree-leaves"><i>A1</i><i>A2</i><i>B1</i><i>B2</i></div>
+        <p>One coherent view<br>at every level.</p>
+      </div>
+    </section>
+    <section class="forecast-section">
+      <div class="section-head"><div class="label">01 / THE PROBLEM</div><div><h2>One business. Many views of demand.</h2><p class="section-lede">Teams forecast at different levels for different decisions. If each series is modeled independently, the global forecast may not equal the sum of its components. That gap creates avoidable disagreement in planning, capacity and inventory conversations.</p></div></div>
+      <div class="forecast-story">
+        <div class="story-stat"><span class="mono">DELIVERY EXPERIENCE</span><strong>Daily</strong><span>hierarchical forecasting for the global Cellulosics business at IFF</span></div>
+        <div><p>At IFF, I led a three-person project team delivering a hierarchical forecasting tool that produced daily predictions for the global Cellulosics business. My work included the forecasting architecture, cloud implementation and project infrastructure.</p><p>This page demonstrates the reconciliation problem with invented series and values. It contains no IFF data, model, source code, accuracy result or production design.</p></div>
+      </div>
+      <div class="principle-grid">
+        <article><span class="mono">01 / STRUCTURE</span><h3>Make the hierarchy explicit</h3><p>Represent how lower-level series aggregate. A summing matrix encodes which components contribute to each total.</p></article>
+        <article><span class="mono">02 / MODEL</span><h3>Forecast at useful levels</h3><p>NeuralForecast provides neural forecasting models, including NHITS. Model choice still needs time-aware validation against strong baselines.</p></article>
+        <article><span class="mono">03 / RECONCILE</span><h3>Restore coherence</h3><p>Reconciliation maps base forecasts to values that obey the hierarchy. Coherence is guaranteed by construction; improved accuracy must be measured.</p></article>
+      </div>
+    </section>
+    <section id="reconciliation" class="forecast-section demo-section">
+      <div class="section-head"><div class="label">02 / INTERACTIVE DEMO</div><div><h2>Where did the total come from?</h2><p class="section-lede">Switch methods to see how a fictional global total and its groups change. All base forecasts, series labels and proportions below are synthetic.</p></div></div>
+      <div class="demo-controls">
+        <label for="method">Reconciliation method</label>
+        <select id="method">
+          <option value="base">Independent base forecasts</option>
+          <option value="bottom">Bottom-up</option>
+          <option value="top">Top-down · illustrative shares</option>
+          <option value="ols">OLS projection · identity error weights</option>
+        </select>
+        <p id="method-note" aria-live="polite">Base forecasts are produced independently; parent and child values may not add up.</p>
+      </div>
+      <div class="forecast-demo-layout">
+        <div class="forecast-table-wrap">
+          <table class="forecast-table">
+            <thead><tr><th scope="col">Hierarchy</th><th scope="col">Base</th><th scope="col">Reconciled</th><th scope="col">Value profile</th></tr></thead>
+            <tbody id="forecast-rows"></tbody>
+          </table>
+        </div>
+        <aside class="coherence-card">
+          <span class="mono">COHERENCE CHECK</span>
+          <strong id="coherence-value">—</strong>
+          <span id="coherence-label">Largest parent-to-child difference</span>
+          <div class="coherence-rule"><i id="coherence-bar"></i></div>
+          <p id="coherence-detail">Choose a method to inspect how the hierarchy behaves.</p>
+        </aside>
+      </div>
+      <p class="demo-caveat"><strong>Read this carefully:</strong> this is an in-browser teaching example, not a trained NeuralForecast model. It uses fixed, invented point forecasts to explain coherence. Its OLS option is a simple least-squares projection with identity error weights; it is not covariance-estimated MinT or evidence that reconciliation improves accuracy.</p>
+    </section>
+    <section class="forecast-section">
+      <div class="section-head"><div class="label">03 / RECONCILIATION CHOICES</div><div><h2>Coherence is a constraint. Accuracy is a test.</h2><p class="section-lede">Bottom-up sums bottom-level forecasts. Top-down allocates an aggregate forecast using proportions. MinT methods choose coherent values using forecast-error covariance assumptions. Each approach has tradeoffs; compare them out of sample at the levels and horizons where decisions are made.</p></div></div>
+      <div class="method-grid">
+        <article><div class="mono">BOTTOM-UP</div><h3>Preserve the leaves</h3><p>Keep the bottom-level forecasts, then sum upward. Straightforward and coherent; aggregate-level information from separate forecasts is not used.</p></article>
+        <article><div class="mono">TOP-DOWN</div><h3>Allocate from the top</h3><p>Forecast the aggregate, then distribute it down the hierarchy. The shares matter and can obscure bottom-level patterns.</p></article>
+        <article><div class="mono">MINT / MINTRACE</div><h3>Use error structure</h3><p>Project base forecasts onto the coherent space while accounting for forecast-error covariance. Estimating that structure well is part of the modeling work.</p></article>
+      </div>
+      <div class="code-block">
+        <div class="code-heading"><span class="mono">NIXTLA · PYTHON WORKFLOW SKETCH</span><span class="mono">MODEL ≠ RECONCILER</span></div>
+        <pre><code>from neuralforecast import NeuralForecast
+from neuralforecast.models import NHITS, HINT
+from hierarchicalforecast.core import HierarchicalReconciliation
+from hierarchicalforecast.methods import BottomUp, MinTrace
+
+# HINT combines a neural base model with hierarchy-aware reconciliation.
+base = NHITS(h=horizon, input_size=24, max_steps=...)
+hint = HINT(
+    h=horizon,
+    S=S_df.drop(columns="unique_id").to_numpy(),
+    model=base,
+    reconciliation="BottomUp",
+)
+nf = NeuralForecast(models=[hint], freq="MS")
+nf.fit(df=train_df, val_size=horizon)
+hint_forecasts = nf.predict()
+
+# Compare independent forecasts reconciled with alternative methods.
+reconcilers = [
+    BottomUp(),
+    MinTrace(method="mint_shrink"),
+]
+reconciler = HierarchicalReconciliation(reconcilers=reconcilers)
+coherent = reconciler.reconcile(
+    Y_hat_df=Y_hat_df,
+    Y_df=Y_fitted_df,
+    S=S_df,
+    tags=tags,
+)</code></pre>
+        <p>Workflow sketch based on Nixtla’s current tutorial. Dataset preparation and fitted residuals are omitted; adapt to the actual hierarchy, forecasting horizon and library versions before running.</p>
+      </div>
+    </section>
+    <section class="forecast-section references">
+      <div class="section-head"><div class="label">04 / SOURCES</div><div><h2>Read the method, not just the output.</h2><p class="section-lede">These references explain the library workflow, reconciliation methods and the statistical basis for MinT.</p></div></div>
+      <div class="reference-grid">
+        <article><span class="mono">OFFICIAL TUTORIAL</span><h3>Hierarchical Forecast with NeuralForecast</h3><p>Nixtla’s worked example demonstrates HINT with NHITS and compares BottomUp and MinTrace reconciliation on a public tourism hierarchy.</p><a href="https://nixtlaverse.nixtla.io/neuralforecast/docs/tutorials/hierarchical_forecasting.html" target="_blank" rel="noreferrer">Open the tutorial ↗</a></article>
+        <article><span class="mono">OFFICIAL DOCUMENTATION</span><h3>NeuralForecast introduction</h3><p>Overview of neural model families, probabilistic forecasts and the library’s workflow.</p><a href="https://nixtlaverse.nixtla.io/neuralforecast/docs/getting-started/introduction.html" target="_blank" rel="noreferrer">Read the introduction ↗</a></article>
+        <article><span class="mono">LIBRARY METHODS</span><h3>HierarchicalForecast</h3><p>Python methods include BottomUp, TopDown, MiddleOut, MinTrace, ERM and probabilistic reconciliation tools.</p><a href="https://github.com/Nixtla/hierarchicalforecast" target="_blank" rel="noreferrer">Browse the library ↗</a></article>
+        <article><span class="mono">PEER-REVIEWED RESEARCH</span><h3>Wickramasuriya, Athanasopoulos &amp; Hyndman · 2019</h3><p>“Optimal forecast reconciliation for hierarchical and grouped time series through trace minimization.” The MinT paper in the Journal of the American Statistical Association.</p><a href="https://doi.org/10.1080/01621459.2018.1448825" target="_blank" rel="noreferrer">Read the paper ↗</a></article>
+      </div>
+      <p class="research-caveat">References establish methods and context; they do not validate the historical IFF project or its results. The demo is synthetic. No accuracy improvement is claimed.</p>
+    </section>
+    <section class="forecast-next"><div><p class="label">CONTINUE EXPLORING</p><h2>Forecasting starts with the decision.</h2></div><div class="next-links"><a href="/">Back to the portfolio ↗</a><a href="https://github.com/nandevers/nandevers.github.io/tree/main/forecasting" target="_blank" rel="noreferrer">Browse the route files ↗</a><a href="https://www.linkedin.com/in/fernando-barbosa-ds/" target="_blank" rel="noreferrer">Connect on LinkedIn ↗</a></div></section>
+  </main>
+  <script src="/assets/js/forecasting.js" defer></script>
+</div>
