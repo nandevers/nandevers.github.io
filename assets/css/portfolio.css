@@ -201,3 +201,29 @@ body #reconciliation>.section-head{display:block;margin-bottom:28px}body #reconc
 body #reconciliation>.demo-controls{display:grid;grid-template-columns:minmax(180px,1fr) minmax(260px,2fr);gap:12px 24px;align-items:center;background:#f5f7fb;border:1px solid #dce3ed;border-radius:4px;padding:22px;margin:0 0 24px}body #reconciliation #method{width:100%;padding:12px}body #reconciliation #method-note{grid-column:1/-1;margin:0;font-size:13px;max-width:75ch;line-height:1.6}
 .xper-story{display:grid;grid-template-columns:1.3fr 1fr;gap:32px;align-items:center;padding:28px 0 38px}.xper-story figure{margin:0}.xper-story img{width:100%;height:auto;border-radius:4px}.xper-story figcaption{font-size:11px;color:#65738a;margin-top:8px}.xper-flow{display:grid;grid-template-columns:repeat(5,1fr);list-style:none;padding:0;gap:14px}.xper-flow li{background:#f1f5fb;border-top:2px solid #16386d;padding:20px 14px}.xper-flow strong{display:block;color:#55739c;font-size:11px;margin-bottom:12px}.xper-flow span{font-size:14px}.xper-controls{display:grid;grid-template-columns:1fr 1fr;gap:25px;margin:24px 0}.xper-controls label{display:grid;grid-template-columns:1fr auto;gap:12px;font-size:13px}.xper-controls input{grid-column:1/-1;width:100%;accent-color:#143c73}.xper-funnel{background:#f5f7fb;padding:24px;border:1px solid #dce3ed;border-radius:4px}.xper-stage{margin:0 0 16px}.xper-stage>span{font-size:12px;display:block;margin-bottom:6px}.xper-stage>div{background:#143c73;min-width:38px;color:white;padding:9px;box-sizing:border-box;border-radius:2px}.xper-stage strong{font-size:15px}.xper-result{font-size:18px;color:#143c73}
 @media(max-width:700px){.scope.impact-scope .impact-stat strong{font-size:42px}.company-strip .company-logo{width:90px!important;height:60px!important}.company-strip .brand-pair .company-logo{width:56px!important;height:44px!important}.xper-story,.xper-controls{grid-template-columns:1fr}.xper-flow{grid-template-columns:1fr 1fr}body #reconciliation>.demo-controls{grid-template-columns:1fr}.research-reader>h2{max-width:none}}
+
+/* Global connections: category colors, country controls and a brief reveal. */
+.practice-map{overflow:visible}
+.practice-connections path{opacity:.2;stroke-width:1.4;stroke-dasharray:1;animation:connection-reveal 1.8s ease-out both}
+.practice-connections path.selected{opacity:.9;stroke-width:2.5}
+.practice-connections path.dimmed{opacity:.055}
+.map-point{transition:opacity .2s}
+.map-point.dimmed{opacity:.25}.map-point.selected .point-core{stroke-width:4}
+.practice-legend{display:grid;gap:14px;margin-top:16px}
+.practice-category{--category:#087f78}
+.practice-category.remote{--category:#315ba8}.practice-category.customer{--category:#8057ad}
+.practice-category h3{display:flex;align-items:center;gap:7px;font:600 12px/1.4 "Segoe UI",Arial,sans-serif;margin:0 0 6px;color:var(--category)}
+.practice-category i{width:8px;height:8px;border-radius:50%;background:var(--category);border:2px solid var(--category)}
+.practice-category.remote i{background:white}
+.practice-category>div{display:flex;flex-wrap:wrap;gap:5px}
+.practice-category button{font:inherit;font-size:11px;line-height:1.4;border:1px solid #dbe3ee;border-radius:4px;background:white;color:#18355a;padding:5px 8px;cursor:pointer}
+.practice-category button:hover,.practice-category button[aria-pressed="true"]{border-color:var(--category);color:var(--category);background:#edf3f8}
+.practice-category button:focus-visible{outline:2px solid var(--category);outline-offset:2px}
+.practice-selection{font-size:11px;line-height:1.5;min-height:2.8em;margin:15px 0 0;color:var(--muted)}
+.connect-intro{align-items:start}.practice-footnote{font-size:11px}
+.xper-team{display:grid;grid-template-columns:1fr 1.2fr;gap:36px;align-items:center;border-top:1px solid var(--line);padding:38px 0}
+.xper-team figure{margin:0}.xper-team img{display:block;width:100%;height:auto;border-radius:4px}
+.xper-team figcaption{font-size:11px;color:var(--muted);margin-top:8px}
+@keyframes connection-reveal{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@media(prefers-reduced-motion:reduce){.practice-connections path{animation:none}.map-point{transition:none}}
+@media(max-width:650px){.xper-team{grid-template-columns:1fr;gap:20px}}
