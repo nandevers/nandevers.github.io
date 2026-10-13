@@ -63,3 +63,27 @@ figure{margin:0}figcaption{font-size:12px;color:var(--muted);line-height:1.6;mar
 .timeline-index small{margin-top:6px;font-size:12px;letter-spacing:.015em}
 .career-moments{margin:38px 0 0;padding:45px 0 55px;border-top:1px solid var(--line);border-bottom:0}
 @media(max-width:650px){.timeline-index{gap:12px}.timeline-index>a{padding:22px 15px 18px;min-height:150px}.timeline-index .brand-pair{gap:6px}.timeline-index .brand-pair .company-logo{width:42px}.timeline-index strong{font-size:13px}}
+
+.customer-language-page .career-connection{grid-template-columns:230px 1fr;gap:38px;align-items:start;background:#fafbfd;padding:32px}
+.customer-language-page .career-connection-brand{gap:9px;border-right:1px solid var(--line);padding-right:25px}
+.customer-language-page .monsanto-primary{width:155px;height:56px;object-fit:contain;object-position:left center;margin-bottom:8px}
+.customer-language-page .career-connection-brand>strong{font-size:21px}
+.customer-language-page .career-connection-brand>span{line-height:1.5;font-size:13px}
+.role-date{font-variant-numeric:tabular-nums;color:var(--blue)!important}
+.brand-successor{display:flex;align-items:center;gap:9px;border-top:1px solid var(--line);padding-top:14px;margin-top:12px;font-size:11px;color:var(--muted)}
+.brand-successor img{object-fit:contain;flex-shrink:0}
+.independent-mark{font-family:Georgia,serif;font-size:26px;color:var(--navy)}
+.word-study{padding:45px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.word-study h2{font-size:38px;margin:15px 0}.word-study>p{max-width:820px}
+.word-controls{display:flex;gap:10px;margin:24px 0;flex-wrap:wrap}
+.word-controls button{border:1px solid #cbd5e3;background:#fff;padding:10px 17px;color:#113e79;border-radius:4px;cursor:pointer;font:inherit;font-size:14px}
+.word-controls button[aria-pressed=true]{background:#081b41;color:white;border-color:#081b41}
+.word-controls button:focus-visible{outline:3px solid #78a6e5;outline-offset:3px}
+.word-study-layout{display:grid;grid-template-columns:minmax(0,3fr) minmax(180px,1fr);gap:26px;align-items:center}
+.word-network-frame{background:#f6f8fc;border:1px solid var(--line);border-radius:6px}
+.word-network-frame svg{width:100%;height:auto;display:block}
+.word-count-panel h3{font-size:21px}.word-count-row{display:grid;grid-template-columns:1fr auto;position:relative;padding:8px 0 12px;margin-bottom:10px;font-size:13px;gap:7px}.word-count-row i{grid-column:1/-1;display:block;background:#2a568e;height:4px;border-radius:2px}
+.word-legend{font-size:13px;color:var(--blue);min-height:2.8em;margin-top:20px}
+.word-corpus{padding:16px 0;border-top:1px solid var(--line);margin:18px 0}.word-corpus summary{cursor:pointer;font-size:14px}.word-corpus li{font-size:14px;line-height:1.8}
+.word-study>.context{font-size:12px;color:var(--muted);line-height:1.65}
+@media(max-width:700px){.customer-language-page .career-connection{grid-template-columns:1fr;gap:25px;padding:24px}.customer-language-page .career-connection-brand{border-right:0;border-bottom:1px solid var(--line);padding:0 0 20px;display:grid;grid-template-columns:1fr 1fr}.customer-language-page .career-connection-brand .monsanto-primary{grid-row:1/4;max-width:100%}.brand-successor{grid-column:1/-1}.word-study-layout{grid-template-columns:1fr}.word-count-panel{max-width:420px}.word-study h2{font-size:30px}}
