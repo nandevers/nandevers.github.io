@@ -2,6 +2,7 @@
 (() => {
 'use strict';
 const rows = [
+["Foreign direct investment in Brazil | Fernando Barbosa","Investimento estrangeiro direto no Brasil | Fernando Barbosa","Inversión extranjera directa en Brasil | Fernando Barbosa"],
 ["I designed and developed Xper, MLflow-based experimentation software that brought dataset discovery, preparation, feature engineering, tuning and validation into one workflow across credit products.","Idealizei e desenvolvi o Xper, software de experimentação baseado em MLflow que reuniu descoberta de bases, preparação, engenharia de atributos, ajuste e validação em um fluxo entre produtos de crédito.","Ideé y desarrollé Xper, software de experimentación basado en MLflow que reunió descubrimiento de datos, preparación, ingeniería de variables, ajuste y validación en un flujo entre productos de crédito."],
 ["Acquisition cost","Custo de aquisição","Costo de adquisición"],
 ["Developed and deployed the first model for the top of the customer-acquisition funnel, reducing acquisition cost by 15% while maintaining the approval rate and origination.","Desenvolvi e implantei o primeiro modelo para o topo do funil de aquisição, reduzindo o custo de aquisição em 15% e mantendo a taxa de aprovação e a originação.","Desarrollé e implementé el primer modelo para la parte superior del embudo de adquisición, reduciendo el costo de adquisición un 15% y manteniendo la tasa de aprobación y la originación."],
