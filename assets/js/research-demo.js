@@ -1,15 +1,46 @@
-(() => {
-const root=document.querySelector('.budget-demo');if(!root)return;
-const lang=new URLSearchParams(location.search).get('lang')||localStorage.getItem('portfolio-lang')||'en';
-const strings={
-en:['Claim','of','Remaining budget','Approve','Reject','Restart','Sequence complete. Restart to explore a different set of decisions.','This claim exceeds the remaining budget. You can reject it or restart.','Approved','Rejected','Illustrative units'],
-pt:['Sinistro','de','Orçamento restante','Aprovar','Rejeitar','Reiniciar','Sequência concluída. Reinicie para explorar outras decisões.','Este sinistro excede o orçamento restante. Você pode rejeitá-lo ou reiniciar.','Aprovado','Rejeitado','Unidades ilustrativas'],
-es:['Siniestro','de','Presupuesto restante','Aprobar','Rechazar','Reiniciar','Secuencia completada. Reinicie para explorar otras decisiones.','Este siniestro excede el presupuesto restante. Puede rechazarlo o reiniciar.','Aprobado','Rechazado','Unidades ilustrativas']
-}[lang]||null;const t=strings||['Claim','of','Remaining budget','Approve','Reject','Restart','Sequence complete. Restart to explore a different set of decisions.','This claim exceeds the remaining budget. You can reject it or restart.','Approved','Rejected','Illustrative units'];
-const values=[24,38,17,45,12,29];let step=0,budget=100;
-const el=id=>document.getElementById('demo-'+id);
-function render(){const done=step===values.length;el('step').textContent=done?t[6]:t[0]+' '+(step+1)+' '+t[1]+' '+values.length;el('claim').textContent=done?'—':values[step]+' · '+t[10];el('budget').textContent=t[2]+': '+budget+' / 100';el('progress').value=budget;el('progress').setAttribute('aria-label',t[2]);el('approve').disabled=done||values[step]>budget;el('reject').disabled=done;el('status').textContent=done?t[6]:values[step]>budget?t[7]:'';}
-function choose(approve){if(step>=values.length||(approve&&values[step]>budget))return;const v=values[step];if(approve)budget-=v;const li=document.createElement('li');li.textContent=t[0]+' '+(step+1)+' · '+v+' · '+t[approve?8:9];el('history').append(li);step++;render();}
-el('approve').textContent=t[3];el('reject').textContent=t[4];el('reset').textContent=t[5];
-el('approve').onclick=()=>choose(true);el('reject').onclick=()=>choose(false);el('reset').onclick=()=>{step=0;budget=100;el('history').replaceChildren();render();};render();
+(()=>{
+'use strict';const root=document.querySelector('.budget-demo');if(!root)return;
+const lang=new URLSearchParams(location.search).get('lang')||'en';
+const words={
+en:{title:'Decision lab',mission:'Challenge: approve 8 claims within 3,500 illustrative units.',claim:'Claim',budget:'Budget left',approve:'Approve',reject:'Reject',undo:'Undo',reset:'Restart',shuffle:'New deck',digits:'Leading digits',observed:'Approved sample',expected:'Benford reference',preview:'If approved next',count:'Approved',points:'Game points',distance:'Total variation distance',empty:'Approve a claim to build the distribution.',done:'Round complete',win:'Challenge achieved',blocked:'This claim exceeds your remaining budget.',note:'Synthetic data. Game points reward interaction, not fraud detection. Small samples fluctuate; conformity to Benford does not identify fraud.',bins:'Bars group adjacent prefixes for readability; distance uses every exact prefix.',history:'Decision history',accepted:'Approved',rejected:'Rejected',rule:'10 points per decision + 25 per approval. Undo reverses points.',prefix:'Current prefix',n:'Sample size'},
+pt:{title:'Laboratório de decisões',mission:'Desafio: aprove 8 sinistros com 3.500 unidades ilustrativas.',claim:'Sinistro',budget:'Orçamento restante',approve:'Aprovar',reject:'Rejeitar',undo:'Desfazer',reset:'Reiniciar',shuffle:'Novo baralho',digits:'Dígitos iniciais',observed:'Amostra aprovada',expected:'Referência de Benford',preview:'Se aprovar o próximo',count:'Aprovados',points:'Pontos do jogo',distance:'Distância de variação total',empty:'Aprove um sinistro para construir a distribuição.',done:'Rodada concluída',win:'Desafio alcançado',blocked:'Este sinistro excede o orçamento restante.',note:'Dados sintéticos. Os pontos premiam a interação, não a detecção de fraude. Amostras pequenas oscilam; conformidade com Benford não identifica fraude.',bins:'As barras agrupam prefixos adjacentes para facilitar a leitura; a distância usa cada prefixo exato.',history:'Histórico de decisões',accepted:'Aprovado',rejected:'Rejeitado',rule:'10 pontos por decisão + 25 por aprovação. Desfazer reverte os pontos.',prefix:'Prefixo atual',n:'Tamanho da amostra'},
+es:{title:'Laboratorio de decisiones',mission:'Desafío: apruebe 8 siniestros con 3.500 unidades ilustrativas.',claim:'Siniestro',budget:'Presupuesto restante',approve:'Aprobar',reject:'Rechazar',undo:'Deshacer',reset:'Reiniciar',shuffle:'Nueva baraja',digits:'Dígitos iniciales',observed:'Muestra aprobada',expected:'Referencia de Benford',preview:'Si aprueba el siguiente',count:'Aprobados',points:'Puntos del juego',distance:'Distancia de variación total',empty:'Apruebe un siniestro para construir la distribución.',done:'Ronda completada',win:'Desafío logrado',blocked:'Este siniestro supera el presupuesto restante.',note:'Datos sintéticos. Los puntos premian la interacción, no la detección de fraude. Las muestras pequeñas fluctúan; ajustarse a Benford no identifica fraude.',bins:'Las barras agrupan prefijos adyacentes para facilitar la lectura; la distancia usa cada prefijo exacto.',history:'Historial de decisiones',accepted:'Aprobado',rejected:'Rechazado',rule:'10 puntos por decisión + 25 por aprobación. Deshacer revierte los puntos.',prefix:'Prefijo actual',n:'Tamaño de muestra'}
+};const t=words[lang]||words.en,ns='http://www.w3.org/2000/svg';
+let deck=[124,318,207,156,482,113,739,265,184,921,347,108,563,219,145,682,391,177,854,236,129,417,195,608],history=[],digits=1;
+const make=(tag,text,cls)=>{const e=document.createElement(tag);if(text)e.textContent=text;if(cls)e.className=cls;return e};
+root.replaceChildren();root.classList.add('distribution-game');
+root.append(make('h3',t.title),make('p',t.mission,'game-mission'));
+const stats=make('div',null,'game-stats');root.append(stats);
+const claim=make('h3'),status=make('p',null,'game-status');status.setAttribute('role','status');status.setAttribute('aria-live','polite');root.append(claim,status);
+const progress=make('progress');progress.max=3500;progress.setAttribute('aria-label',t.budget);root.append(progress);
+const controls=make('div',null,'demo-controls');root.append(controls);
+const buttons={};['approve','reject','undo','reset','shuffle'].forEach(k=>{buttons[k]=make('button',t[k]);buttons[k].type='button';controls.append(buttons[k])});
+root.append(make('p',t.rule,'context'));
+const picker=make('div',null,'digit-picker');picker.append(make('span',t.digits));const digitButtons=[];
+[1,2,3].forEach(d=>{const b=make('button',String(d));b.type='button';b.onclick=()=>{digits=d;render()};digitButtons.push(b);picker.append(b)});root.append(picker);
+const legend=make('div',null,'distribution-legend');[['expected',t.expected],['observed',t.observed],['preview',t.preview]].forEach(([c,v])=>legend.append(make('span',v,c)));root.append(legend);
+const svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 800 280');svg.setAttribute('role','img');root.append(svg);
+const detail=make('p',null,'context');root.append(detail,make('p',t.bins,'context'),make('p',t.note,'context'));
+const dl=make('details'),summary=make('summary',t.history),list=make('ol');dl.append(summary,list);root.append(dl);
+const prefix=v=>Math.floor(v/Math.pow(10,3-digits));
+function distribution(values){const start=10**(digits-1),len=9*start,obs=Array(len).fill(0),exp=obs.map((_,i)=>Math.log10(1+1/(start+i)));values.forEach(v=>obs[prefix(v)-start]++);if(values.length)obs.forEach((_,i)=>obs[i]/=values.length);return {start,len,obs,exp,tv:values.length?.5*obs.reduce((s,v,i)=>s+Math.abs(v-exp[i]),0):null}}
+function node(tag,attrs){const e=document.createElementNS(ns,tag);Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,v));return e}
+function render(){
+const accepted=history.filter(h=>h.ok).map(h=>h.value),spent=accepted.reduce((s,v)=>s+v,0),budget=3500-spent,done=history.length===deck.length,current=deck[history.length],dist=distribution(accepted),next=distribution(!done&&current<=budget?[...accepted,current]:accepted),points=history.length*10+accepted.length*25;
+stats.replaceChildren();[[t.budget,budget+' / 3,500'],[t.count,accepted.length+' / 8'],[t.points,points],[t.distance,dist.tv===null?'—':dist.tv.toFixed(3)]].forEach(([label,value])=>{const a=make('div');a.append(make('small',label),make('strong',String(value)));stats.append(a)});
+claim.textContent=done?t.done:t.claim+' '+(history.length+1)+' / '+deck.length+' · '+current;
+status.textContent=accepted.length>=8?t.win:done?t.done:current>budget?t.blocked:accepted.length===0?t.empty:'';
+progress.value=budget;buttons.approve.disabled=done||current>budget;buttons.reject.disabled=done;buttons.undo.disabled=!history.length;
+digitButtons.forEach((b,i)=>b.setAttribute('aria-pressed',String(i+1===digits)));
+svg.replaceChildren();svg.setAttribute('aria-label',t.observed+' / '+t.expected+' · '+digits+' · '+t.n+': '+accepted.length);
+const groups=digits===1?9:30,size=dist.len/groups,bins=Array.from({length:groups},(_,i)=>{const a=i*size,b=(i+1)*size;return {label:(dist.start+a)+(size>1?'–'+(dist.start+b-1):''),o:dist.obs.slice(a,b).reduce((s,v)=>s+v,0),e:dist.exp.slice(a,b).reduce((s,v)=>s+v,0),p:next.obs.slice(a,b).reduce((s,v)=>s+v,0)}});
+const max=Math.max(.05,...bins.flatMap(b=>[b.o,b.e,b.p])),width=720/groups;
+[0,.5,1].forEach(frac=>{const y=230-frac*190;svg.append(node('line',{x1:48,x2:776,y1:y,y2:y,stroke:'#dce3ed'}));const label=node('text',{x:40,y:y+4,'text-anchor':'end','font-size':11,fill:'#65738a'});label.textContent=(frac*max*100).toFixed(0)+'%';svg.append(label)});
+bins.forEach((b,i)=>{const x=50+i*width;[['e','#bbc9dc',0],['o','#123e79',width*.27],['p','none',width*.54]].forEach(([key,color,offset])=>{const h=b[key]/max*190,r=node('rect',{x:x+offset,y:230-h,width:width*.23,height:h,fill:color,stroke:key==='p'?'#5382bf':'none','stroke-dasharray':key==='p'?'3 2':'none',rx:1});const title=node('title',{});title.textContent=b.label+' · '+({e:t.expected,o:t.observed,p:t.preview}[key])+': '+(b[key]*100).toFixed(2)+'%';r.append(title);svg.append(r)});if(groups===9||i%3===0){const label=node('text',{x:x+width*.35,y:250,'text-anchor':'middle','font-size':10,fill:'#65738a'});label.textContent=b.label;svg.append(label)}});
+detail.textContent=t.n+': '+accepted.length+(done?'':' · '+t.prefix+': '+prefix(current))+' · P(k) = log₁₀(1 + 1/k)';
+list.replaceChildren();history.forEach((h,i)=>list.append(make('li',(i+1)+'. '+h.value+' · '+(h.ok?t.accepted:t.rejected))));
+}
+buttons.approve.onclick=()=>{const spent=history.filter(h=>h.ok).reduce((s,h)=>s+h.value,0);if(history.length<deck.length&&deck[history.length]<=3500-spent){history.push({value:deck[history.length],ok:true});render()}};
+buttons.reject.onclick=()=>{if(history.length<deck.length){history.push({value:deck[history.length],ok:false});render()}};
+buttons.undo.onclick=()=>{history.pop();render()};buttons.reset.onclick=()=>{history=[];render()};buttons.shuffle.onclick=()=>{deck=[...deck];for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]]}history=[];render()};render();
 })();
