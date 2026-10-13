@@ -249,3 +249,14 @@ body #reconciliation>.demo-controls{display:grid;grid-template-columns:minmax(18
 .fdi-process{display:flex;align-items:center;gap:20px;margin:24px 0}.fdi-process span{flex:1;padding:20px;background:var(--wash)}.fdi-process i{font-style:normal;color:var(--blue)}
 .fdi-preview{display:flex;flex-direction:column;justify-content:center;gap:14px;padding:24px;background:var(--wash)}.fdi-preview strong{font:38px Georgia,serif;color:var(--navy)}.fdi-preview span{font-size:13px}
 @media(max-width:700px){.lab-config,.xper-impact,.fdi-stages,.lab-report-grid{grid-template-columns:1fr}.suite-diagram{grid-template-columns:1fr 1fr}.fdi-award{grid-template-columns:1fr}.fdi-process{flex-direction:column;align-items:stretch;gap:8px}.fdi-process i{transform:rotate(90deg);align-self:center}}
+
+/* Research overview and degree navigation */
+.research-breadcrumb{display:flex;gap:12px;align-items:center;padding:28px 0 0;color:var(--muted);font-size:13px}.research-breadcrumb a{color:var(--blue);text-decoration:underline;text-underline-offset:4px}
+.research-hub-heading{padding-bottom:46px}.research-hub-heading h1{max-width:850px}.research-hub-heading .lede{max-width:790px}
+.research-paths{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px;margin-bottom:80px}
+.research-path{border:1px solid var(--line);border-radius:5px;overflow:hidden;display:flex;flex-direction:column}
+.research-path-image{display:block;height:310px;background:var(--wash);overflow:hidden}.research-path-image>img{width:100%;height:100%;object-fit:cover;object-position:50% 36%}
+.research-path-copy{padding:30px;display:flex;flex-direction:column;flex:1}.research-path-copy h2{font-size:36px;margin:24px 0 20px}.research-path-copy>p:not(.section-label){color:var(--muted)}.research-path-copy>.inline-link{margin-top:auto;padding-top:20px}.research-path-copy .expertise{margin:0 0 10px}
+.research-institution{display:flex;gap:14px;align-items:center;font-size:13px;color:var(--muted);min-height:52px}.research-institution img{object-fit:contain}
+.research-economics-visual{display:flex;flex-direction:column;padding:28px 32px;background:var(--navy);color:#dbe8ff}.research-economics-visual:hover{text-decoration:none}.research-economics-visual svg{width:100%;height:158px}.research-visual-kicker{font-size:12px;letter-spacing:.04em}.research-visual-title{font:29px Georgia,serif;color:white}.research-visual-caption{font-size:10px;opacity:.65;margin-top:9px}
+@media(max-width:760px){.research-paths{grid-template-columns:1fr;gap:28px}.research-path-image{height:290px}.research-path-copy{padding:24px}.research-path-copy h2{font-size:32px}.research-breadcrumb{flex-wrap:wrap}.research-hub-heading{padding-top:40px}}

@@ -2,6 +2,19 @@
 (() => {
 'use strict';
 const rows = [
+["Research | Fernando Barbosa","Pesquisa | Fernando Barbosa","Investigación | Fernando Barbosa"],
+["Academic research","Pesquisa acadêmica","Investigación académica"],
+["From economics to decision science.","Da economia à ciência da decisão.","De la economía a la ciencia de las decisiones."],
+["Two chapters of my research: understanding investment in Brazil and learning how to make decisions under constraints.","Dois capítulos da minha pesquisa: compreender o investimento no Brasil e aprender a tomar decisões sob restrições.","Dos capítulos de mi investigación: comprender la inversión en Brasil y aprender a tomar decisiones con restricciones."],
+["Master’s research","Pesquisa de mestrado","Investigación de maestría"],
+["Bachelor’s research","Pesquisa de graduação","Investigación de grado"],
+["Reinforcement learning for fraud prevention in crop insurance, connecting statistical signals, sequential decisions and a limited budget.","Aprendizado por reforço para prevenção de fraudes no seguro agrícola, conectando sinais estatísticos, decisões sequenciais e um orçamento limitado.","Aprendizaje por refuerzo para prevenir el fraude en seguros agrícolas, conectando señales estadísticas, decisiones secuenciales y un presupuesto limitado."],
+["Crop insurance","Seguro agrícola","Seguro agrícola"],
+["Explore the master’s research ↗","Explore a pesquisa de mestrado ↗","Explora la investigación de maestría ↗"],
+["Explore the bachelor’s research ↗","Explore a pesquisa de graduação ↗","Explora la investigación de grado ↗"],
+["Investment. Data. Models.","Investimento. Dados. Modelos.","Inversión. Datos. Modelos."],
+["Conceptual illustration","Ilustração conceitual","Ilustración conceptual"],
+["An undergraduate research project and a final thesis revisiting the same economic question with updates and a different model.","Uma iniciação científica e um trabalho de conclusão de curso que retomou a mesma questão econômica com atualizações e um modelo diferente.","Un proyecto de investigación de grado y una tesis final que retomó la misma pregunta económica con actualizaciones y un modelo diferente."],
 ["Foreign direct investment in Brazil | Fernando Barbosa","Investimento estrangeiro direto no Brasil | Fernando Barbosa","Inversión extranjera directa en Brasil | Fernando Barbosa"],
 ["I designed and developed Xper, MLflow-based experimentation software that brought dataset discovery, preparation, feature engineering, tuning and validation into one workflow across credit products.","Idealizei e desenvolvi o Xper, software de experimentação baseado em MLflow que reuniu descoberta de bases, preparação, engenharia de atributos, ajuste e validação em um fluxo entre produtos de crédito.","Ideé y desarrollé Xper, software de experimentación basado en MLflow que reunió descubrimiento de datos, preparación, ingeniería de variables, ajuste y validación en un flujo entre productos de crédito."],
 ["Acquisition cost","Custo de aquisição","Costo de adquisición"],
