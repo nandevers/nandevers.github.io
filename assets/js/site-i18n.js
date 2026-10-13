@@ -1,0 +1,853 @@
+/* EN is canonical. Translate text nodes without destroying links or markup. */
+(() => {
+'use strict';
+const rows = [
+  [
+    "Home",
+    "Início",
+    "Inicio"
+  ],
+  [
+    "Experience",
+    "Experiência",
+    "Experiencia"
+  ],
+  [
+    "Portfolio",
+    "Portfólio",
+    "Portafolio"
+  ],
+  [
+    "Writing",
+    "Artigos",
+    "Artículos"
+  ],
+  [
+    "Connect",
+    "Contato",
+    "Contacto"
+  ],
+  [
+    "Skip to content",
+    "Ir para o conteúdo",
+    "Saltar al contenido"
+  ],
+  [
+    "Main navigation",
+    "Navegação principal",
+    "Navegación principal"
+  ],
+  [
+    "Lead Scientist at FICO",
+    "Lead Scientist na FICO",
+    "Lead Scientist en FICO"
+  ],
+  [
+    "Better decisions.",
+    "Melhores decisões.",
+    "Mejores decisiones."
+  ],
+  [
+    "Through applied AI.",
+    "Com IA aplicada.",
+    "Con IA aplicada."
+  ],
+  [
+    "I connect models, business decisions and the people who make them.",
+    "Conecto modelos, decisões de negócio e as pessoas responsáveis por elas.",
+    "Conecto modelos, decisiones de negocio y las personas que las toman."
+  ],
+  [
+    "My work spans credit decision systems, global forecasting and optimization—from the underlying mathematics to solution architecture and delivery.",
+    "Meu trabalho abrange sistemas de decisão de crédito, previsão global e otimização — da matemática à arquitetura e à entrega de soluções.",
+    "Mi trabajo abarca sistemas de decisión crediticia, previsión global y optimización: desde las matemáticas hasta la arquitectura y la entrega de soluciones."
+  ],
+  [
+    "Explore my experience",
+    "Explore minha experiência",
+    "Explore mi experiencia"
+  ],
+  [
+    "Applied AI &",
+    "IA aplicada e",
+    "IA aplicada y"
+  ],
+  [
+    "decision science",
+    "ciência da decisão",
+    "ciencia de decisiones"
+  ],
+  [
+    "São Paulo, Brazil",
+    "São Paulo, Brasil",
+    "São Paulo, Brasil"
+  ],
+  [
+    "International customer collaboration",
+    "Colaboração internacional com clientes",
+    "Colaboración internacional con clientes"
+  ],
+  [
+    "LinkedIn profile",
+    "Perfil no LinkedIn",
+    "Perfil de LinkedIn"
+  ],
+  [
+    "institutions in",
+    "instituições no",
+    "instituciones en"
+  ],
+  [
+    "FICO customer pipeline",
+    "pipeline de clientes FICO",
+    "el pipeline de clientes de FICO"
+  ],
+  [
+    "FICO products in",
+    "produtos FICO no",
+    "productos FICO en"
+  ],
+  [
+    "customer work",
+    "trabalho com clientes",
+    "el trabajo con clientes"
+  ],
+  [
+    "ongoing proofs",
+    "provas de valor",
+    "pruebas de valor"
+  ],
+  [
+    "of value at FICO",
+    "em andamento na FICO",
+    "en curso en FICO"
+  ],
+  [
+    "project contributors led",
+    "colaboradores liderados",
+    "colaboradores liderados"
+  ],
+  [
+    "across two IFF programs",
+    "em dois programas na IFF",
+    "en dos programas de IFF"
+  ],
+  [
+    "Selected experience",
+    "Experiência selecionada",
+    "Experiencia seleccionada"
+  ],
+  [
+    "A career built around",
+    "Uma carreira construída em torno",
+    "Una carrera centrada en"
+  ],
+  [
+    "the decision.",
+    "da decisão.",
+    "la decisión."
+  ],
+  [
+    "Explore the work, the responsibility and the technical thinking behind it.",
+    "Conheça o trabalho, as responsabilidades e o raciocínio técnico por trás de cada projeto.",
+    "Conozca el trabajo, las responsabilidades y el razonamiento técnico de cada proyecto."
+  ],
+  [
+    "Network intelligence",
+    "Inteligência de redes",
+    "Inteligencia de redes"
+  ],
+  [
+    "Global operations",
+    "Operações globais",
+    "Operaciones globales"
+  ],
+  [
+    "Financial decisions",
+    "Decisões financeiras",
+    "Decisiones financieras"
+  ],
+  [
+    "AI for financial decisions",
+    "IA para decisões financeiras",
+    "IA para decisiones financieras"
+  ],
+  [
+    "I help financial institutions and fintechs translate AI requirements into solution designs, working alongside customer teams on technology evaluation and architecture.",
+    "Ajudo instituições financeiras e fintechs a transformar requisitos de IA em soluções, colaborando com suas equipes na avaliação tecnológica e na arquitetura.",
+    "Ayudo a instituciones financieras y fintechs a convertir requisitos de IA en soluciones, colaborando con sus equipos en la evaluación tecnológica y la arquitectura."
+  ],
+  [
+    "Credit underwriting",
+    "Análise de crédito",
+    "Evaluación crediticia"
+  ],
+  [
+    "Credit limit management",
+    "Gestão de limites de crédito",
+    "Gestión de límites de crédito"
+  ],
+  [
+    "Solution architecture",
+    "Arquitetura de soluções",
+    "Arquitectura de soluciones"
+  ],
+  [
+    "Customer pipeline covering more than 30 institutions and 10 FICO products, including three ongoing proofs of value.",
+    "Pipeline de clientes envolvendo mais de 30 instituições e 10 produtos FICO, com três provas de valor em andamento.",
+    "Pipeline de clientes que abarca más de 30 instituciones y 10 productos FICO, con tres pruebas de valor en curso."
+  ],
+  [
+    "Collaboration across Latin America, Australia, India, Malaysia, Europe and the UK.",
+    "Colaboração com clientes na América Latina, Austrália, Índia, Malásia, Europa e Reino Unido.",
+    "Colaboración con clientes en América Latina, Australia, India, Malasia, Europa y Reino Unido."
+  ],
+  [
+    "Connecting customer objectives with what the technology can achieve and how it can be applied.",
+    "Conectando os objetivos dos clientes às possibilidades da tecnologia e à sua aplicação.",
+    "Conectando los objetivos del cliente con las posibilidades de la tecnología y su aplicación."
+  ],
+  [
+    "These figures describe the scope of customer work, rather than booked revenue or completed deployments.",
+    "Esses números descrevem o escopo do trabalho com clientes, e não receita contratada ou implantações concluídas.",
+    "Estas cifras describen el alcance del trabajo con clientes, no ingresos contratados ni implementaciones completadas."
+  ],
+  [
+    "IFF · Data science delivery leadership",
+    "IFF · Liderança na entrega de ciência de dados",
+    "IFF · Liderazgo en la entrega de ciencia de datos"
+  ],
+  [
+    "Forecasting & resource decisions",
+    "Previsão e decisões sobre recursos",
+    "Previsión y decisiones sobre recursos"
+  ],
+  [
+    "I led approximately eight project contributors across two global programs, taking responsibility for infrastructure, architectural choices and cloud implementation.",
+    "Liderei aproximadamente oito colaboradores em dois programas globais, com responsabilidade pela infraestrutura, pelas escolhas arquiteturais e pela implementação em nuvem.",
+    "Lideré aproximadamente a ocho colaboradores en dos programas globales, con responsabilidad sobre la infraestructura, las decisiones arquitectónicas y la implementación en la nube."
+  ],
+  [
+    "5 contributors",
+    "5 colaboradores",
+    "5 colaboradores"
+  ],
+  [
+    "3 contributors",
+    "3 colaboradores",
+    "3 colaboradores"
+  ],
+  [
+    "BioActives optimization",
+    "Otimização de BioActives",
+    "Optimización de BioActives"
+  ],
+  [
+    "A live configuration-as-software tool for simulating scenarios in global production.",
+    "Uma ferramenta operacional de configuração como software para simular cenários de produção global.",
+    "Una herramienta operativa de configuración como software para simular escenarios de producción global."
+  ],
+  [
+    "Cellulosics forecasting",
+    "Previsão para Cellulosics",
+    "Previsión para Cellulosics"
+  ],
+  [
+    "Hierarchical forecasts updated daily to give the global business more frequent visibility.",
+    "Previsões hierárquicas atualizadas diariamente para ampliar a visibilidade do negócio global.",
+    "Previsiones jerárquicas actualizadas a diario para dar mayor visibilidad al negocio global."
+  ],
+  [
+    "Explore the forecasting field note",
+    "Explore a nota técnica de previsão",
+    "Explore la nota técnica de previsión"
+  ],
+  [
+    "Nextel · Proprietary model development",
+    "Nextel · Desenvolvimento de modelo proprietário",
+    "Nextel · Desarrollo de modelo propietario"
+  ],
+  [
+    "Churn through a network lens",
+    "Churn sob a perspectiva de redes",
+    "Churn desde la perspectiva de redes"
+  ],
+  [
+    "I developed Favorites, a graph-based churn model investigating how an influential customer's departure changes risk signals in their close network.",
+    "Desenvolvi o Favorites, um modelo de churn baseado em grafos que investigava como a saída de um cliente influente altera sinais de risco na sua rede próxima.",
+    "Desarrollé Favorites, un modelo de churn basado en grafos que investigaba cómo la salida de un cliente influyente cambia las señales de riesgo en su red cercana."
+  ],
+  [
+    "The work drew on message-passing intuition, contagion mathematics and probabilistic graphical models. I used NetworkX and experimented with graph databases and visualization.",
+    "O trabalho se apoiava na intuição de passagem de mensagens, na matemática de contágio e em modelos gráficos probabilísticos. Usei NetworkX e explorei bancos de dados de grafos e visualizações.",
+    "El trabajo se apoyaba en la intuición del paso de mensajes, las matemáticas del contagio y los modelos gráficos probabilísticos. Utilicé NetworkX y exploré bases de datos de grafos y visualizaciones."
+  ],
+  [
+    "My recalled historical ROC-AUC is approximately 0.80–0.85. The original evaluation artifacts are unavailable. The public demonstration uses synthetic data and does not reproduce that result.",
+    "Minha lembrança do ROC-AUC histórico é de aproximadamente 0,80–0,85. Os artefatos da avaliação original não estão disponíveis. A demonstração pública usa dados sintéticos e não reproduz esse resultado.",
+    "Mi recuerdo del ROC-AUC histórico es de aproximadamente 0,80–0,85. Los artefactos de la evaluación original no están disponibles. La demostración pública utiliza datos sintéticos y no reproduce ese resultado."
+  ],
+  [
+    "Explore the network demonstration",
+    "Explore a demonstração de redes",
+    "Explore la demostración de redes"
+  ],
+  [
+    "Working across cultures",
+    "Trabalhando entre culturas",
+    "Trabajando entre culturas"
+  ],
+  [
+    "Global perspective.",
+    "Perspectiva global.",
+    "Perspectiva global."
+  ],
+  [
+    "Practical collaboration.",
+    "Colaboração prática.",
+    "Colaboración práctica."
+  ],
+  [
+    "Customer work across regions, together with FICO events and training in Mexico and the United States, has shaped how I listen, communicate and adapt.",
+    "O trabalho com clientes de diferentes regiões, junto a eventos e treinamentos FICO no México e nos Estados Unidos, moldou minha forma de ouvir, comunicar e me adaptar.",
+    "El trabajo con clientes de distintas regiones, junto con eventos y formación de FICO en México y Estados Unidos, ha dado forma a mi manera de escuchar, comunicarme y adaptarme."
+  ],
+  [
+    "I value cultural awareness, clear expectations and efficient remote collaboration across teams and time zones.",
+    "Valorizo a sensibilidade cultural, expectativas claras e a colaboração remota eficiente entre equipes e fusos horários.",
+    "Valoro la sensibilidad cultural, las expectativas claras y la colaboración remota eficiente entre equipos y husos horarios."
+  ],
+  [
+    "Latin America",
+    "América Latina",
+    "América Latina"
+  ],
+  [
+    "Europe & UK",
+    "Europa e Reino Unido",
+    "Europa y Reino Unido"
+  ],
+  [
+    "Asia-Pacific",
+    "Ásia-Pacífico",
+    "Asia-Pacífico"
+  ],
+  [
+    "Portuguese",
+    "Português",
+    "Portugués"
+  ],
+  [
+    "English",
+    "Inglês",
+    "Inglés"
+  ],
+  [
+    "Spanish",
+    "Espanhol",
+    "Español"
+  ],
+  [
+    "Native",
+    "Nativo",
+    "Nativo"
+  ],
+  [
+    "Fluent",
+    "Fluente",
+    "Fluido"
+  ],
+  [
+    "Proficient",
+    "Proficiente",
+    "Competente"
+  ],
+  [
+    "Ideas in practice",
+    "Ideias na prática",
+    "Ideas en la práctica"
+  ],
+  [
+    "Writing to clarify",
+    "Escrever para esclarecer",
+    "Escribir para aclarar"
+  ],
+  [
+    "the work.",
+    "o trabalho.",
+    "el trabajo."
+  ],
+  [
+    "Before the AI pilot: clarify the decision",
+    "Antes do piloto de IA: esclareça a decisão",
+    "Antes del piloto de IA: aclare la decisión"
+  ],
+  [
+    "Decision brief on LinkedIn ↗",
+    "Nota sobre decisões no LinkedIn ↗",
+    "Nota sobre decisiones en LinkedIn ↗"
+  ],
+  [
+    "Applied data science & technical practice",
+    "Ciência de dados aplicada e prática técnica",
+    "Ciencia de datos aplicada y práctica técnica"
+  ],
+  [
+    "Essays on Medium ↗",
+    "Artigos no Medium ↗",
+    "Artículos en Medium ↗"
+  ],
+  [
+    "Public portfolio",
+    "Portfólio público",
+    "Portafolio público"
+  ],
+  [
+    "Inspect the thinking.",
+    "Explore o raciocínio.",
+    "Explore el razonamiento."
+  ],
+  [
+    "Demonstrations, code and field notes.",
+    "Demonstrações, código e notas técnicas.",
+    "Demostraciones, código y notas técnicas."
+  ],
+  [
+    "Networks / synthetic demonstration",
+    "Redes / demonstração sintética",
+    "Redes / demostración sintética"
+  ],
+  [
+    "How risk travels through a network",
+    "Como o risco se propaga por uma rede",
+    "Cómo se propaga el riesgo por una red"
+  ],
+  [
+    "Explore a message-passing illustration of connected churn signals.",
+    "Explore uma ilustração de passagem de mensagens entre sinais de churn conectados.",
+    "Explore una ilustración del paso de mensajes entre señales de churn conectadas."
+  ],
+  [
+    "Interactive demo ↗",
+    "Demonstração interativa ↗",
+    "Demostración interactiva ↗"
+  ],
+  [
+    "Source",
+    "Código",
+    "Código"
+  ],
+  [
+    "Total",
+    "Total",
+    "Total"
+  ],
+  [
+    "Group A",
+    "Grupo A",
+    "Grupo A"
+  ],
+  [
+    "Group B",
+    "Grupo B",
+    "Grupo B"
+  ],
+  [
+    "Forecasting / technical field note",
+    "Previsão / nota técnica",
+    "Previsión / nota técnica"
+  ],
+  [
+    "Forecasts that add up",
+    "Previsões que fecham a conta",
+    "Previsiones que cuadran"
+  ],
+  [
+    "Hierarchy, coherence and reconciliation, with a synthetic interactive example.",
+    "Hierarquia, coerência e reconciliação, com um exemplo interativo sintético.",
+    "Jerarquía, coherencia y reconciliación, con un ejemplo interactivo sintético."
+  ],
+  [
+    "Read & explore ↗",
+    "Leia e explore ↗",
+    "Lea y explore ↗"
+  ],
+  [
+    "Agents / research prototype",
+    "Agentes / protótipo de pesquisa",
+    "Agentes / prototipo de investigación"
+  ],
+  [
+    "Credit-agent experiments ↗",
+    "Experimentos com agentes de crédito ↗",
+    "Experimentos con agentes de crédito ↗"
+  ],
+  [
+    "Synthetic banking data, SQL agents and LangGraph. Personal research, separate from FICO products.",
+    "Dados bancários sintéticos, agentes SQL e LangGraph. Pesquisa pessoal, independente dos produtos FICO.",
+    "Datos bancarios sintéticos, agentes SQL y LangGraph. Investigación personal, independiente de los productos FICO."
+  ],
+  [
+    "Economics / open data tooling",
+    "Economia / ferramentas de dados abertos",
+    "Economía / herramientas de datos abiertos"
+  ],
+  [
+    "A Python client for IBGE aggregate data, from metadata discovery to pandas DataFrames.",
+    "Um cliente Python para dados agregados do IBGE, da descoberta de metadados a DataFrames pandas.",
+    "Un cliente Python para datos agregados del IBGE, desde el descubrimiento de metadatos hasta DataFrames de pandas."
+  ],
+  [
+    "Let's connect",
+    "Vamos conversar",
+    "Conversemos"
+  ],
+  [
+    "What decision",
+    "Qual decisão",
+    "¿En qué decisión"
+  ],
+  [
+    "are you working on?",
+    "você está trabalhando?",
+    "está trabajando?"
+  ],
+  [
+    "Applied AI leadership, financial decision systems and substantive technical collaboration. Based in Brazil; open to international opportunities.",
+    "Liderança em IA aplicada, sistemas de decisão financeira e colaboração técnica. Baseado no Brasil; aberto a oportunidades internacionais.",
+    "Liderazgo en IA aplicada, sistemas de decisión financiera y colaboración técnica. Radicado en Brasil; abierto a oportunidades internacionales."
+  ],
+  [
+    "Start a conversation",
+    "Inicie uma conversa",
+    "Inicie una conversación"
+  ],
+  [
+    "Professional views are my own. Employer names describe experience.",
+    "As opiniões profissionais são pessoais. Os nomes das empresas descrevem minha experiência.",
+    "Las opiniones profesionales son personales. Los nombres de empresas describen mi experiencia."
+  ],
+  [
+    "Career timeline",
+    "Trajetória profissional",
+    "Trayectoria profesional"
+  ],
+  [
+    "Career",
+    "Carreira",
+    "Carrera"
+  ],
+  [
+    "All experience",
+    "Experiência completa",
+    "Experiencia completa"
+  ],
+  [
+    "View portfolio",
+    "Veja o portfólio",
+    "Ver portafolio"
+  ],
+  [
+    "View experience",
+    "Veja a experiência",
+    "Ver experiencia"
+  ],
+  [
+    "Selected work",
+    "Trabalhos selecionados",
+    "Trabajos seleccionados"
+  ],
+  [
+    "Research & writing",
+    "Pesquisa e artigos",
+    "Investigación y artículos"
+  ],
+  [
+    "Back to portfolio",
+    "Voltar ao portfólio",
+    "Volver al portafolio"
+  ],
+  [
+    "Back to home",
+    "Voltar ao início",
+    "Volver al inicio"
+  ],
+  [
+    "Current",
+    "Atual",
+    "Actual"
+  ],
+  [
+    "Present",
+    "Atual",
+    "Actual"
+  ],
+  [
+    "Previous",
+    "Anterior",
+    "Anterior"
+  ],
+  [
+    "Read more",
+    "Leia mais",
+    "Leer más"
+  ],
+  [
+    "Learn more",
+    "Saiba mais",
+    "Más información"
+  ],
+  [
+    "Play",
+    "Iniciar",
+    "Iniciar"
+  ],
+  [
+    "Pause",
+    "Pausar",
+    "Pausar"
+  ],
+  [
+    "Step",
+    "Avançar",
+    "Avanzar"
+  ],
+  [
+    "Reset",
+    "Reiniciar",
+    "Reiniciar"
+  ],
+  [
+    "Method",
+    "Método",
+    "Método"
+  ],
+  [
+    "Base",
+    "Base",
+    "Base"
+  ],
+  [
+    "Current output",
+    "Resultado atual",
+    "Resultado actual"
+  ],
+  [
+    "Independent forecasts",
+    "Previsões independentes",
+    "Previsiones independientes"
+  ],
+  [
+    "Bottom-up",
+    "De baixo para cima",
+    "De abajo hacia arriba"
+  ],
+  [
+    "Top-down",
+    "De cima para baixo",
+    "De arriba hacia abajo"
+  ],
+  [
+    "Reconciliation",
+    "Reconciliação",
+    "Reconciliación"
+  ],
+  [
+    "Hierarchical forecasting",
+    "Previsão hierárquica",
+    "Previsión jerárquica"
+  ],
+  [
+    "References",
+    "Referências",
+    "Referencias"
+  ],
+  [
+    "Research context",
+    "Contexto científico",
+    "Contexto científico"
+  ],
+  [
+    "Career, companies and delivery responsibilities.",
+    "Carreira, empresas e responsabilidades de entrega.",
+    "Trayectoria, empresas y responsabilidades de entrega."
+  ],
+  [
+    "Interactive demonstrations, code and technical field notes.",
+    "Demonstrações interativas, código e notas técnicas.",
+    "Demostraciones interactivas, código y notas técnicas."
+  ],
+  [
+    "Ideas on applied AI and decision science.",
+    "Ideias sobre IA aplicada e ciência da decisão.",
+    "Ideas sobre IA aplicada y ciencia de decisiones."
+  ],
+  [
+    "International opportunities and professional conversations.",
+    "Oportunidades internacionais e conversas profissionais.",
+    "Oportunidades internacionales y conversaciones profesionales."
+  ],
+  [
+    "The experience behind the work.",
+    "A experiência por trás do trabalho.",
+    "La experiencia detrás del trabajo."
+  ],
+  [
+    "A chronological view of my work across agriculture, telecom, banking, retail, fintech, industry and financial decision systems.",
+    "Uma visão cronológica do meu trabalho em agricultura, telecomunicações, bancos, varejo, fintechs, indústria e sistemas de decisão financeira.",
+    "Una visión cronológica de mi trabajo en agricultura, telecomunicaciones, banca, comercio minorista, fintechs, industria y sistemas de decisión financiera."
+  ],
+  [
+    "Customer Insights Analyst",
+    "Analista de inteligência de clientes",
+    "Analista de inteligencia de clientes"
+  ],
+  [
+    "Data Scientist",
+    "Cientista de dados",
+    "Científico de datos"
+  ],
+  [
+    "Data Science Specialist",
+    "Especialista em ciência de dados",
+    "Especialista en ciencia de datos"
+  ],
+  [
+    "Data Scientist III",
+    "Cientista de dados III",
+    "Científico de datos III"
+  ],
+  [
+    "Lead Data Scientist",
+    "Líder de ciência de dados",
+    "Líder de ciencia de datos"
+  ],
+  [
+    "Lead Scientist",
+    "Lead Scientist",
+    "Lead Scientist"
+  ],
+  [
+    "From 2022",
+    "Desde 2022",
+    "Desde 2022"
+  ],
+  [
+    "Developed statistical forecasts and customer-insight tools using R, SQL and VBA; analyzed Portuguese NPS feedback and improved reporting and data collection for agricultural decisions.",
+    "Desenvolvi previsões estatísticas e ferramentas de inteligência de clientes com R, SQL e VBA; analisei comentários de NPS em português e aprimorei relatórios e a coleta de dados para decisões agrícolas.",
+    "Desarrollé previsiones estadísticas y herramientas de inteligencia de clientes con R, SQL y VBA; analicé comentarios de NPS en portugués y mejoré informes y recopilación de datos para decisiones agrícolas."
+  ],
+  [
+    "Built churn and credit-risk models with Python, R, PySpark and PostgreSQL; created data pipelines and analytical tools supporting customer-retention decisions.",
+    "Construí modelos de churn e risco de crédito com Python, R, PySpark e PostgreSQL; criei pipelines de dados e ferramentas analíticas para decisões de retenção de clientes.",
+    "Construí modelos de churn y riesgo de crédito con Python, R, PySpark y PostgreSQL; creé pipelines de datos y herramientas analíticas para decisiones de retención de clientes."
+  ],
+  [
+    "Developed credit-scoring and behavioral models, addressed model drift, and maintained ETL workflows supporting lending and risk monitoring.",
+    "Desenvolvi modelos de pontuação de crédito e comportamento, tratei a degradação de modelos e mantive fluxos ETL para concessão de crédito e monitoramento de risco.",
+    "Desarrollé modelos de puntuación crediticia y comportamiento, abordé la degradación de modelos y mantuve flujos ETL para concesión de crédito y seguimiento del riesgo."
+  ],
+  [
+    "Developed association-rule and search models with Python, GCP and BigQuery; designed online experiments for checkout and product discovery.",
+    "Desenvolvi modelos de regras de associação e busca com Python, GCP e BigQuery; desenhei experimentos online para checkout e descoberta de produtos.",
+    "Desarrollé modelos de reglas de asociación y búsqueda con Python, GCP y BigQuery; diseñé experimentos en línea para el proceso de compra y el descubrimiento de productos."
+  ],
+  [
+    "Built an end-to-end credit-underwriting pipeline, developed real-time analytics with Apache Pinot and Kafka, and worked on A/B testing and credit monitoring.",
+    "Construí um pipeline completo de análise de crédito, desenvolvi análises em tempo real com Apache Pinot e Kafka e trabalhei com testes A/B e monitoramento de crédito.",
+    "Construí un pipeline completo de evaluación crediticia, desarrollé análisis en tiempo real con Apache Pinot y Kafka y trabajé con pruebas A/B y seguimiento crediticio."
+  ],
+  [
+    "Dates follow the supplied career records. Year-level dates are used where résumé versions differ.",
+    "As datas seguem os registros profissionais fornecidos. Onde as versões do currículo divergem, são apresentados apenas os anos.",
+    "Las fechas siguen los registros profesionales facilitados. Cuando las versiones del currículum difieren, se indican solo los años."
+  ]
+];
+rows.push(...[["FIELD NOTE / HIERARCHICAL FORECASTING","NOTA TÉCNICA / PREVISÃO HIERÁRQUICA","NOTA TÉCNICA / PREVISIÓN JERÁRQUICA"],["Forecasts that","Previsões que","Previsiones que"],["add up.","fecham a conta.","cuadran."],["A forecast is a decision system when every level must agree: the global outlook, the business unit, and the underlying series.","Uma previsão se torna um sistema de decisão quando todos os níveis precisam concordar: a visão global, a unidade de negócio e as séries de base.","Una previsión se convierte en un sistema de decisión cuando todos los niveles deben concordar: la perspectiva global, la unidad de negocio y las series de base."],["Explore forecast reconciliation ↓","Explore a reconciliação de previsões ↓","Explore la reconciliación de previsiones ↓"],["GLOBAL TOTAL","TOTAL GLOBAL","TOTAL GLOBAL"],["GROUP A","GRUPO A","GRUPO A"],["GROUP B","GRUPO B","GRUPO B"],["One coherent view","Uma visão coerente","Una visión coherente"],["at every level.","em todos os níveis.","en todos los niveles."],["01 / THE PROBLEM","01 / O PROBLEMA","01 / EL PROBLEMA"],["One business. Many views of demand.","Um negócio. Muitas visões da demanda.","Un negocio. Muchas perspectivas de la demanda."],["Teams forecast at different levels for different decisions. If each series is modeled independently, the global forecast may not equal the sum of its components. That gap creates avoidable disagreement in planning, capacity and inventory conversations.","Equipes fazem previsões em diferentes níveis para diferentes decisões. Se cada série for modelada de forma independente, a previsão global pode diferir da soma dos componentes. Essa diferença gera divergências evitáveis no planejamento de capacidade e estoques.","Los equipos elaboran previsiones a distintos niveles para distintas decisiones. Si cada serie se modela de forma independiente, la previsión global puede diferir de la suma de sus componentes. Esa diferencia genera discrepancias evitables en la planificación de capacidad e inventario."],["DELIVERY EXPERIENCE","EXPERIÊNCIA DE ENTREGA","EXPERIENCIA DE ENTREGA"],["Daily","Diária","Diaria"],["hierarchical forecasting for the global Cellulosics business at IFF","previsão hierárquica para o negócio global de Cellulosics na IFF","previsión jerárquica para el negocio global de Cellulosics en IFF"],["At IFF, I led a three-person project team delivering a hierarchical forecasting tool that produced daily predictions for the global Cellulosics business. My work included the forecasting architecture, cloud implementation and project infrastructure.","Na IFF, liderei uma equipe de projeto de três pessoas na entrega de uma ferramenta de previsão hierárquica com previsões diárias para o negócio global de Cellulosics. Meu trabalho incluiu arquitetura de previsão, implementação em nuvem e infraestrutura do projeto.","En IFF, lideré un equipo de proyecto de tres personas que entregó una herramienta de previsión jerárquica con predicciones diarias para el negocio global de Cellulosics. Mi trabajo incluyó arquitectura de previsión, implementación en la nube e infraestructura del proyecto."],["This page demonstrates the reconciliation problem with invented series and values. It contains no IFF data, model, source code, accuracy result or production design.","Esta página demonstra o problema de reconciliação com séries e valores fictícios. Não contém dados, modelos, código, resultados de acurácia ou projetos de produção da IFF.","Esta página demuestra el problema de reconciliación con series y valores ficticios. No contiene datos, modelos, código, resultados de precisión ni diseños de producción de IFF."],["01 / STRUCTURE","01 / ESTRUTURA","01 / ESTRUCTURA"],["Make the hierarchy explicit","Explicite a hierarquia","Explicite la jerarquía"],["Represent how lower-level series aggregate. A summing matrix encodes which components contribute to each total.","Represente como as séries dos níveis inferiores se agregam. Uma matriz de soma define quais componentes contribuem para cada total.","Represente cómo se agregan las series de niveles inferiores. Una matriz de suma define qué componentes contribuyen a cada total."],["02 / MODEL","02 / MODELO","02 / MODELO"],["Forecast at useful levels","Preveja nos níveis relevantes","Prevea en los niveles relevantes"],["NeuralForecast provides neural forecasting models, including NHITS. Model choice still needs time-aware validation against strong baselines.","NeuralForecast oferece modelos neurais de previsão, incluindo NHITS. A escolha exige validação temporal contra boas referências.","NeuralForecast ofrece modelos neuronales de previsión, incluido NHITS. La elección exige validación temporal frente a buenas referencias."],["03 / RECONCILE","03 / RECONCILIAR","03 / RECONCILIAR"],["Restore coherence","Restabeleça a coerência","Restablezca la coherencia"],["Reconciliation maps base forecasts to values that obey the hierarchy. Coherence is guaranteed by construction; improved accuracy must be measured.","A reconciliação transforma previsões de base em valores que respeitam a hierarquia. A coerência é garantida pela construção; a melhora na acurácia deve ser medida.","La reconciliación transforma previsiones de base en valores que respetan la jerarquía. La coherencia se garantiza por construcción; la mejora de precisión debe medirse."],["02 / INTERACTIVE DEMO","02 / DEMONSTRAÇÃO INTERATIVA","02 / DEMOSTRACIÓN INTERACTIVA"],["Where did the total come from?","De onde veio o total?","¿De dónde salió el total?"],["Switch methods to see how a fictional global total and its groups change. All base forecasts, series labels and proportions below are synthetic.","Alterne os métodos para observar as mudanças em um total global fictício e seus grupos. Todas as previsões de base, rótulos e proporções abaixo são sintéticos.","Cambie de método para observar las variaciones en un total global ficticio y sus grupos. Todas las previsiones de base, etiquetas y proporciones son sintéticas."],["Reconciliation method","Método de reconciliação","Método de reconciliación"],["Independent base forecasts","Previsões de base independentes","Previsiones de base independientes"],["Top-down · illustrative shares","De cima para baixo · proporções ilustrativas","De arriba hacia abajo · proporciones ilustrativas"],["OLS projection · identity error weights","Projeção OLS · pesos de erro identidade","Proyección OLS · pesos de error identidad"],["Hierarchy","Hierarquia","Jerarquía"],["Value profile","Perfil de valores","Perfil de valores"],["Base forecasts are produced independently; parent and child values may not add up.","As previsões de base são produzidas de forma independente; os valores dos níveis superiores e inferiores podem não somar corretamente.","Las previsiones de base se producen de forma independiente; los valores de niveles superiores e inferiores pueden no sumar correctamente."],["COHERENCE CHECK","VERIFICAÇÃO DE COERÊNCIA","COMPROBACIÓN DE COHERENCIA"],["Largest parent-to-child difference","Maior diferença entre pai e filhos","Mayor diferencia entre padre e hijos"],["Choose a method to inspect how the hierarchy behaves.","Escolha um método para observar o comportamento da hierarquia.","Elija un método para observar el comportamiento de la jerarquía."],["Read this carefully:","Leia com atenção:","Lea con atención:"],["this is an in-browser teaching example, not a trained NeuralForecast model. It uses fixed, invented point forecasts to explain coherence. Its OLS option is a simple least-squares projection with identity error weights; it is not covariance-estimated MinT or evidence that reconciliation improves accuracy.","este é um exemplo didático no navegador, e não um modelo NeuralForecast treinado. Ele usa previsões pontuais fixas e fictícias para explicar a coerência. A opção OLS é uma projeção de mínimos quadrados com pesos de erro identidade; não é MinT com covariância estimada nem evidência de melhora na acurácia.","este es un ejemplo didáctico en el navegador, no un modelo NeuralForecast entrenado. Utiliza previsiones puntuales fijas y ficticias para explicar la coherencia. La opción OLS es una proyección de mínimos cuadrados con pesos de error identidad; no es MinT con covarianza estimada ni evidencia de mejora de precisión."],["03 / RECONCILIATION CHOICES","03 / ESCOLHAS DE RECONCILIAÇÃO","03 / OPCIONES DE RECONCILIACIÓN"],["Coherence is a constraint. Accuracy is a test.","Coerência é uma restrição. Acurácia exige avaliação.","La coherencia es una restricción. La precisión exige evaluación."],["Bottom-up sums bottom-level forecasts. Top-down allocates an aggregate forecast using proportions. MinT methods choose coherent values using forecast-error covariance assumptions. Each approach has tradeoffs; compare them out of sample at the levels and horizons where decisions are made.","Bottom-up soma previsões do nível inferior. Top-down distribui uma previsão agregada usando proporções. Métodos MinT escolhem valores coerentes com hipóteses sobre a covariância dos erros de previsão. Cada abordagem envolve escolhas; compare-as fora da amostra, nos níveis e horizontes em que as decisões são tomadas.","Bottom-up suma previsiones del nivel inferior. Top-down distribuye una previsión agregada mediante proporciones. Los métodos MinT eligen valores coherentes con supuestos sobre la covarianza de los errores de previsión. Cada enfoque implica compromisos; compárelos fuera de muestra en los niveles y horizontes donde se toman decisiones."],["Preserve the leaves","Preserve as folhas","Conserve las hojas"],["Allocate from the top","Distribua a partir do topo","Distribuya desde arriba"],["Use error structure","Use a estrutura dos erros","Utilice la estructura de errores"],["Keep the bottom-level forecasts, then sum upward. Straightforward and coherent; aggregate-level information from separate forecasts is not used.","Mantenha as previsões do nível inferior e some para cima. Simples e coerente; não utiliza informações de previsões independentes dos níveis agregados.","Conserve las previsiones del nivel inferior y sume hacia arriba. Simple y coherente; no utiliza información de previsiones independientes de los niveles agregados."],["Forecast the aggregate, then distribute it down the hierarchy. The shares matter and can obscure bottom-level patterns.","Preveja o agregado e distribua pela hierarquia. As proporções importam e podem ocultar padrões dos níveis inferiores.","Prevea el agregado y distribúyalo por la jerarquía. Las proporciones importan y pueden ocultar patrones de los niveles inferiores."],["Project base forecasts onto the coherent space while accounting for forecast-error covariance. Estimating that structure well is part of the modeling work.","Projete as previsões de base no espaço coerente considerando a covariância dos erros. Estimar bem essa estrutura faz parte da modelagem.","Proyecte las previsiones de base en el espacio coherente considerando la covarianza de errores. Estimar bien esa estructura forma parte del modelado."],["04 / SOURCES","04 / FONTES","04 / FUENTES"],["Read the method, not just the output.","Conheça o método além do resultado.","Conozca el método además del resultado."],["These references explain the library workflow, reconciliation methods and the statistical basis for MinT.","Estas referências explicam o fluxo da biblioteca, os métodos de reconciliação e a base estatística do MinT.","Estas referencias explican el flujo de la biblioteca, los métodos de reconciliación y la base estadística de MinT."],["OFFICIAL TUTORIAL","TUTORIAL OFICIAL","TUTORIAL OFICIAL"],["OFFICIAL DOCUMENTATION","DOCUMENTAÇÃO OFICIAL","DOCUMENTACIÓN OFICIAL"],["LIBRARY METHODS","MÉTODOS DA BIBLIOTECA","MÉTODOS DE LA BIBLIOTECA"],["PEER-REVIEWED RESEARCH","PESQUISA REVISADA POR PARES","INVESTIGACIÓN REVISADA POR PARES"],["Open the tutorial ↗","Abra o tutorial ↗","Abra el tutorial ↗"],["Read the introduction ↗","Leia a introdução ↗","Lea la introducción ↗"],["Browse the library ↗","Explore a biblioteca ↗","Explore la biblioteca ↗"],["Read the paper ↗","Leia o artigo ↗","Lea el artículo ↗"],["References establish methods and context; they do not validate the historical IFF project or its results. The demo is synthetic. No accuracy improvement is claimed.","As referências fundamentam métodos e contexto; não validam o projeto histórico da IFF nem seus resultados. A demonstração é sintética. Não há alegação de melhora na acurácia.","Las referencias fundamentan métodos y contexto; no validan el proyecto histórico de IFF ni sus resultados. La demostración es sintética. No se afirma una mejora de precisión."],["CONTINUE EXPLORING","CONTINUE EXPLORANDO","SIGA EXPLORANDO"],["Forecasting starts with the decision.","A previsão começa pela decisão.","La previsión comienza por la decisión."],["Back to the portfolio ↗","Voltar ao portfólio ↗","Volver al portafolio ↗"],["Browse the route files ↗","Explore os arquivos da página ↗","Explore los archivos de la página ↗"],["Connect on LinkedIn ↗","Conecte-se no LinkedIn ↗","Conecte en LinkedIn ↗"],["NETWORK SCIENCE · INTERACTIVE DEMONSTRATION","CIÊNCIA DE REDES · DEMONSTRAÇÃO INTERATIVA","CIENCIA DE REDES · DEMOSTRACIÓN INTERACTIVA"],["When one node","Quando um nó","Cuando un nodo"],["moves,","muda,","cambia,"],["who feels it?","quem sente?","¿quién lo siente?"],["A synthetic network makes one idea visible: a change in one influential member can alter the risk signal around them.","Uma rede sintética torna uma ideia visível: uma mudança em um membro influente pode alterar o sinal de risco ao seu redor.","Una red sintética hace visible una idea: un cambio en un miembro influyente puede alterar la señal de riesgo a su alrededor."],["Explore the message-passing intuition behind network-aware churn analysis. The graph and values below are invented for demonstration.","Explore a intuição de passagem de mensagens na análise de churn em redes. O grafo e os valores abaixo são fictícios para fins de demonstração.","Explore la intuición del paso de mensajes en el análisis de churn en redes. El grafo y los valores son ficticios para fines de demostración."],["Explore the simulation","Explore a simulação","Explore la simulación"],["A small signal","Um pequeno sinal","Una pequeña señal"],["can travel far.","pode chegar longe.","puede llegar lejos."],["WEIGHTED TIES","CONEXÕES PONDERADAS","CONEXIONES PONDERADAS"],["PASSING SIGNALS","TRANSMISSÃO DE SINAIS","TRANSMISIÓN DE SEÑALES"],["CHANGING EXPOSURE","EXPOSIÇÃO EM MUDANÇA","EXPOSICIÓN CAMBIANTE"],["01 / PLAY WITH THE NETWORK","01 / EXPLORE A REDE","01 / EXPLORE LA RED"],["Start with one signal.","Comece com um sinal.","Comience con una señal."],["Choose a starting node. Step through a few rounds and watch its neighbors—and their neighbors—receive weighted messages.","Escolha um nó inicial. Avance algumas rodadas e observe seus vizinhos — e os vizinhos deles — receberem mensagens ponderadas.","Elija un nodo inicial. Avance algunas rondas y observe cómo sus vecinos — y los vecinos de estos — reciben mensajes ponderados."],["SYNTHETIC NETWORK","REDE SINTÉTICA","RED SINTÉTICA"],["Lower exposure","Menor exposição","Menor exposición"],["Rising exposure","Exposição crescente","Exposición creciente"],["Elevated exposure","Exposição elevada","Exposición elevada"],["Tie strength","Força da conexão","Fuerza de conexión"],["SCENARIO CONTROLS","CONTROLES DO CENÁRIO","CONTROLES DEL ESCENARIO"],["Initial signal","Sinal inicial","Señal inicial"],["Message strength","Intensidade da mensagem","Intensidad del mensaje"],["Muted","Fraca","Débil"],["Strong","Forte","Fuerte"],["▶ Play","▶ Iniciar","▶ Iniciar"],["Step →","Avançar →","Avanzar →"],["MOST EXPOSED · EXCLUDING SEED","MAIS EXPOSTO · EXCLUINDO O NÓ INICIAL","MÁS EXPUESTO · EXCLUYENDO EL NODO INICIAL"],["Choose Play or Step to begin.","Escolha Iniciar ou Avançar para começar.","Elija Iniciar o Avanzar para comenzar."],["Each round updates every member at once from the previous round’s signals.","Cada rodada atualiza todos os membros ao mesmo tempo a partir dos sinais da rodada anterior.","Cada ronda actualiza todos los miembros al mismo tiempo a partir de las señales de la ronda anterior."],["02 / THE MECHANISM","02 / O MECANISMO","02 / EL MECANISMO"],["A simple","Uma regra simples","Una regla simple"],["message rule.","de mensagens.","de mensajes."],["Each member sends a fraction of their current signal along each tie. A noisy-OR combines incoming messages while preserving an individual baseline.","Cada membro envia uma fração do seu sinal atual por cada conexão. Uma regra noisy-OR combina as mensagens recebidas preservando uma linha de base individual.","Cada miembro envía una fracción de su señal actual por cada conexión. Una regla noisy-OR combina los mensajes recibidos conservando una línea de base individual."],["synthetic baseline risk for member i","risco de base sintético do membro i","riesgo de base sintético del miembro i"],["the message-strength control","controle de intensidade da mensagem","control de intensidad del mensaje"],["tie strength from member j to i","força da conexão do membro j ao i","fuerza de conexión del miembro j al i"],["member j’s signal in the current round","sinal do membro j na rodada atual","señal del miembro j en la ronda actual"],["This compact rule is for explanation, not inference. Real churn models need validated data, leakage controls, calibration, time-aware evaluation, governance and a clear intervention policy.","Esta regra compacta serve para explicação, não para inferência. Modelos reais de churn exigem dados validados, controles de vazamento, calibração, avaliação temporal, governança e uma política clara de intervenção.","Esta regla compacta sirve para explicar, no para inferir. Los modelos reales de churn requieren datos validados, controles de fuga, calibración, evaluación temporal, gobernanza y una política clara de intervención."],["03 / THE PROFESSIONAL STORY","03 / A EXPERIÊNCIA PROFISSIONAL","03 / LA EXPERIENCIA PROFESIONAL"],["Built from a real question.","Nascido de uma pergunta real.","Nacido de una pregunta real."],["Shown with a new example.","Ilustrado com um novo exemplo.","Ilustrado con un nuevo ejemplo."],["At Nextel, I developed a proprietary graph-based churn model called","Na Nextel, desenvolvi um modelo proprietário de churn baseado em grafos chamado","En Nextel, desarrollé un modelo propietario de churn basado en grafos llamado"],[". It drew on network influence, message-passing ideas and probabilistic graphical models to examine how churn by an influential member could change risk across their close network. I explored graph tooling including NetworkX and graph databases.",". Ele usava influência em redes, passagem de mensagens e modelos gráficos probabilísticos para examinar como a saída de um membro influente poderia alterar o risco em sua rede próxima. Explorei ferramentas como NetworkX e bancos de dados de grafos.",". Utilizaba influencia en redes, paso de mensajes y modelos gráficos probabilísticos para examinar cómo la salida de un miembro influyente podría cambiar el riesgo en su red cercana. Exploré herramientas como NetworkX y bases de datos de grafos."],["Historical ROC-AUC, as recalled by the author.","ROC-AUC histórico, conforme lembrança do autor.","ROC-AUC histórico, según el recuerdo del autor."],["The original model, evaluation data and artifacts are unavailable, so this figure has not been independently verified or reproduced here.","O modelo original, os dados e os artefatos de avaliação não estão disponíveis; portanto, esse número não foi verificado de forma independente nem reproduzido aqui.","El modelo original, los datos y los artefactos de evaluación no están disponibles; por ello, esta cifra no se ha verificado de forma independiente ni reproducido aquí."],["Important boundary","Limite importante","Límite importante"],["This public demo is a new, synthetic teaching example. It is not the proprietary Favorites algorithm, its source code, its parameters, or a reproduction of its performance. No customer, carrier or subscriber data is included.","Esta demonstração pública é um novo exemplo didático sintético. Não é o algoritmo proprietário Favorites, seu código, seus parâmetros nem uma reprodução de seu desempenho. Não inclui dados de clientes, operadoras ou assinantes.","Esta demostración pública es un nuevo ejemplo didáctico sintético. No es el algoritmo propietario Favorites, su código, sus parámetros ni una reproducción de su rendimiento. No incluye datos de clientes, operadores o abonados."],["04 / RESEARCH CONTEXT","04 / CONTEXTO CIENTÍFICO","04 / CONTEXTO CIENTÍFICO"],["Ideas with a research trail.","Ideias com base científica.","Ideas con base científica."],["These sources ground the modeling concepts and the telecom use case. They are context for this demonstration, not validation of the historical Favorites model.","Estas fontes fundamentam os conceitos de modelagem e o caso de telecomunicações. Dão contexto à demonstração, sem validar o modelo histórico Favorites.","Estas fuentes fundamentan los conceptos de modelado y el caso de telecomunicaciones. Aportan contexto a la demostración, sin validar el modelo histórico Favorites."],["Predictive association does not by itself establish causal peer influence. These publications provide scientific context; they do not verify or reproduce Favorites or its recalled 0.80–0.85 ROC-AUC.","Associação preditiva, por si só, não estabelece influência causal entre pares. Estas publicações oferecem contexto científico; não verificam nem reproduzem o Favorites ou seu ROC-AUC lembrado de 0,80–0,85.","La asociación predictiva no establece por sí sola influencia causal entre pares. Estas publicaciones aportan contexto científico; no verifican ni reproducen Favorites ni su ROC-AUC recordado de 0,80–0,85."],["KEEP EXPLORING","CONTINUE EXPLORANDO","SIGA EXPLORANDO"],["Good models begin","Bons modelos começam","Los buenos modelos comienzan"],["with better questions.","com perguntas melhores.","con mejores preguntas."],["Source code on GitHub ↗","Código-fonte no GitHub ↗","Código fuente en GitHub ↗"],["Connect with Fernando ↗","Conecte-se com Fernando ↗","Conecte con Fernando ↗"],["Synthetic illustration · No customer data · Personal work","Ilustração sintética · Sem dados de clientes · Trabalho pessoal","Ilustración sintética · Sin datos de clientes · Trabajo personal"]]);
+rows.push(...[["Product Management Intern","Estagiário em gestão de produtos","Becario de gestión de productos"],["2025–Present","2025–Atual","2025–Actual"],["Ⅱ Pause","Ⅱ Pausar","Ⅱ Pausar"],["CORE","CENTRAL","CENTRAL"],["PERIPHERY","PERIFERIA","PERIFERIA"],["BRIDGE","PONTE","PUENTE"],["Global total","Total global","Total global"],["Bottom-up preserves each leaf forecast, then sums components to every parent.","Bottom-up preserva cada previsão no nível inferior e soma os componentes para cada nível superior.","Bottom-up conserva cada previsión del nivel inferior y suma los componentes para cada nivel superior."],["Top-down preserves the synthetic global forecast and allocates it using invented historical shares.","Top-down preserva a previsão global sintética e a distribui usando proporções históricas fictícias.","Top-down conserva la previsión global sintética y la distribuye con proporciones históricas ficticias."],["OLS projects all seven base values onto the coherent space, treating base errors as equally weighted and uncorrelated.","OLS projeta os sete valores de base no espaço coerente, com erros de base de mesmo peso e sem correlação.","OLS proyecta los siete valores de base en el espacio coherente, con errores de base de igual peso y sin correlación."],["Every parent equals the sum of its children in this synthetic example.","Cada nível superior equivale à soma de seus componentes neste exemplo sintético.","Cada nivel superior equivale a la suma de sus componentes en este ejemplo sintético."],["FIELD NOTES","NOTAS TÉCNICAS","NOTAS TÉCNICAS"],["/ APPLIED AI","/ IA APLICADA","/ IA APLICADA"],["FOUNDATIONS · PROBABILISTIC MODELS","FUNDAMENTOS · MODELOS PROBABILÍSTICOS","FUNDAMENTOS · MODELOS PROBABILÍSTICOS"],["FOUNDATIONS · MESSAGE PASSING","FUNDAMENTOS · PASSAGEM DE MENSAGENS","FUNDAMENTOS · PASO DE MENSAJES"],["APPLICATION · TELECOM CHURN","APLICAÇÃO · CHURN EM TELECOM","APLICACIÓN · CHURN EN TELECOM"],["EVALUATION · NETWORK DESIGN","AVALIAÇÃO · DESENHO DA REDE","EVALUACIÓN · DISEÑO DE RED"],["A comprehensive reference on model representation, inference and learning.","Uma referência abrangente sobre representação de modelos, inferência e aprendizado.","Una referencia completa sobre representación de modelos, inferencia y aprendizaje."],["Nixtla’s worked example demonstrates HINT with NHITS and compares BottomUp and MinTrace reconciliation on a public tourism hierarchy.","O exemplo da Nixtla demonstra HINT com NHITS e compara as reconciliações BottomUp e MinTrace em uma hierarquia pública de turismo.","El ejemplo de Nixtla demuestra HINT con NHITS y compara las reconciliaciones BottomUp y MinTrace en una jerarquía pública de turismo."],["Overview of neural model families, probabilistic forecasts and the library’s workflow.","Visão geral das famílias de modelos neurais, previsões probabilísticas e fluxo da biblioteca.","Visión general de las familias de modelos neuronales, previsiones probabilísticas y flujo de la biblioteca."],["Python methods include BottomUp, TopDown, MiddleOut, MinTrace, ERM and probabilistic reconciliation tools.","Os métodos em Python incluem BottomUp, TopDown, MiddleOut, MinTrace, ERM e ferramentas de reconciliação probabilística.","Los métodos en Python incluyen BottomUp, TopDown, MiddleOut, MinTrace, ERM y herramientas de reconciliación probabilística."],["NIXTLA · PYTHON WORKFLOW SKETCH","NIXTLA · ESBOÇO DE FLUXO EM PYTHON","NIXTLA · ESBOZO DE FLUJO EN PYTHON"],["MODEL ≠ RECONCILER","MODELO ≠ RECONCILIADOR","MODELO ≠ RECONCILIADOR"],["Open the runnable Python example ↗","Abra o exemplo executável em Python ↗","Abra el ejemplo ejecutable en Python ↗"],["Workflow sketch based on Nixtla’s current tutorial. Dataset preparation and fitted residuals are omitted; adapt to the actual hierarchy, forecasting horizon and library versions before running.","Esboço baseado no tutorial atual da Nixtla. A preparação dos dados e os resíduos ajustados foram omitidos; adapte à hierarquia, ao horizonte e às versões das bibliotecas antes de executar.","Esbozo basado en el tutorial actual de Nixtla. Se omiten la preparación de datos y los residuos ajustados; adapte a la jerarquía, al horizonte y a las versiones de las bibliotecas antes de ejecutar."],["Fernando Barbosa · Applied AI & Decision Science","Fernando Barbosa · IA aplicada e ciência da decisão","Fernando Barbosa · IA aplicada y ciencia de decisiones"]]);
+const dictionaries = {pt: new Map(rows.map(r => [r[0],r[1]])), es: new Map(rows.map(r => [r[0],r[2]]))};
+const normalize = value => value.replace(/\s+/g,' ').trim();
+const query = new URL(location.href).searchParams.get('lang');
+const lang = ['en','pt','es'].includes(query) ? query : 'en';
+function translate(value) {
+ if(lang === 'en') return value;
+ const key=normalize(value);const found=dictionaries[lang]?.get(key);if(found) return found;
+ const pt=lang==='pt';
+ let m;
+ if((m=key.match(/^ROUND (\d+)$/))) return (pt?'RODADA ':'RONDA ')+m[1];
+ if((m=key.match(/^([\d.]+) units$/))) return m[1]+(pt?' unidades':' unidades');
+ if((m=key.match(/^([AB]) · Series (\d+)$/))) return m[1]+(pt?' · Série ':' · Serie ')+m[2];
+ if((m=key.match(/^Member ([A-L]) · (.+)$/))) return (pt?'Membro ':'Miembro ')+m[1]+' · '+({'highly connected':pt?'muito conectado':'muy conectado',peripheral:pt?'periférico':'periférico',bridge:pt?'ponte':'puente',core:'central'}[m[2]] || m[2]);
+ if((m=key.match(/^Synthetic risk signal after (\d+) rounds?\.$/))) return (pt?'Sinal de risco sintético após ':'Señal de riesgo sintética después de ')+m[1]+(pt?(m[1]==='1'?' rodada.':' rodadas.'):(m[1]==='1'?' ronda.':' rondas.'));
+ if((m=key.match(/^(\d+) MEMBERS \/ (\d+) TIES$/))) return m[1]+(pt?' MEMBROS / ':' MIEMBROS / ')+m[2]+(pt?' CONEXÕES':' CONEXIONES');
+ if(key.startsWith('Global gap ')) return key.replace('Global gap ',pt?'Diferença global ':'Diferencia global ').replace('Group A gap ',pt?'Diferença no Grupo A ':'Diferencia en Grupo A ').replace('Group B gap ',pt?'Diferença no Grupo B ':'Diferencia en Grupo B ');
+ if(key.startsWith('Synthetic member ')) return key.replace('Synthetic member ',pt?'Membro sintético ':'Miembro sintético ').replace('illustrative risk signal ',pt?'sinal de risco ilustrativo ':'señal de riesgo ilustrativa ').replace('illustrative signal ',pt?'sinal ilustrativo ':'señal ilustrativa ').replace(' percent. Select as initial signal.',pt?' por cento. Selecione como sinal inicial.':' por ciento. Seleccione como señal inicial.').replace('core','central').replace('periphery',pt?'periferia':'periferia').replace('bridge',pt?'ponte':'puente').replace(' position',pt?' posição':' posición');
+ if((m=key.match(/^Tie strength ([\d.]+) between members ([A-L]) and ([A-L])$/))) return (pt?'Força da conexão ':'Fuerza de conexión ')+m[1]+(pt?' entre os membros ':' entre los miembros ')+m[2]+(pt?' e ':' y ')+m[3];
+ return value;
+}
+document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang;
+window.portfolioLanguage = lang;
+window.portfolioTranslate = translate;
+const ignore = node => node.parentElement?.closest('script,style,code,pre,[data-no-translate],.language-switch');
+function translateText(root) {
+ const walker = document.createTreeWalker(root,NodeFilter.SHOW_TEXT); let node;
+ while ((node = walker.nextNode())) {
+  if(ignore(node)) continue;
+  const text = node.nodeValue; const replacement = translate(text);
+  if(replacement !== text) node.nodeValue = text.match(/^\s*/)[0] + replacement + text.match(/\s*$/)[0];
+ }
+ root.querySelectorAll?.('[aria-label],[title],[placeholder]').forEach(el => ['aria-label','title','placeholder'].forEach(attr => {
+  if(el.hasAttribute(attr) && !el.closest('[data-no-translate],.language-switch')) el.setAttribute(attr,translate(el.getAttribute(attr)));
+ }));
+}
+translateText(document.body);
+const titles = {pt:{'Applied AI & Decision Science':'IA aplicada e ciência da decisão','Experience':'Experiência','Portfolio':'Portfólio','Writing':'Artigos','Connect':'Contato','Hierarchical Forecasting':'Previsão hierárquica','Network Churn':'Churn em redes'},es:{'Applied AI & Decision Science':'IA aplicada y ciencia de decisiones','Experience':'Experiencia','Portfolio':'Portafolio','Writing':'Artículos','Connect':'Contacto','Hierarchical Forecasting':'Previsión jerárquica','Network Churn':'Churn en redes'}};
+for (const [source,target] of Object.entries(titles[lang] || {})) document.title = document.title.replace(source,target);
+function localizeLinks(root) {
+ root.querySelectorAll('a[href]').forEach(link => {
+  if(link.closest('.language-switch')) return;
+  const href=link.getAttribute('href');
+  if(!href || href.startsWith('#')) return;
+  let url; try {url = new URL(href,location.href);} catch {return;}
+  if(url.origin !== location.origin || !['http:','https:'].includes(url.protocol)) return;
+  // Only documents; do not modify downloads or assets.
+  if(/\.(?:pdf|zip|py|js|css|png|jpe?g|svg|csv|json)$/i.test(url.pathname)) return;
+  if(lang !== 'en') url.searchParams.set('lang',lang); else url.searchParams.delete('lang');
+  link.href=url.pathname+url.search+url.hash;
+ });
+}
+localizeLinks(document);
+if(lang !== 'en') {
+ const observer = new MutationObserver(records => {
+  // Only text, accessible labels, and newly inserted content matter;
+  // ignore graph animation attributes so motion does not trigger translation.
+  if (!records.some(r=>r.type==='characterData'||r.type==='childList'||r.type==='attributes')) return;
+  observer.disconnect();
+  translateText(document.body);
+  observer.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['aria-label','title','placeholder']});
+ });
+ observer.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['aria-label','title','placeholder']});
+}
+const existingSelect = document.querySelector('#language-select');
+if (existingSelect) {
+ existingSelect.value = lang;
+ existingSelect.setAttribute('aria-label',lang === 'en' ? 'Language' : 'Idioma');
+ existingSelect.addEventListener('change', () => {
+  const next = new URL(location.href); next.searchParams.set('lang',existingSelect.value); location.assign(next.href);
+ });
+}
+if (!existingSelect && !document.querySelector('.language-switch')) {
+ const switcher = document.createElement('nav'); switcher.className='language-switch';
+ switcher.setAttribute('aria-label',lang==='pt'?'Idioma':lang==='es'?'Idioma':'Language');
+ switcher.style.cssText='display:flex;gap:.6rem;align-items:center;font-size:.75rem;flex-wrap:wrap';
+ for (const [key,label,title] of [['en','EN','English'],['pt','PT','Português'],['es','ES','Español']]) {
+  const a=document.createElement('a');const url=new URL(location.href);url.searchParams.set('lang',key);
+  a.href=url.pathname+url.search+url.hash;a.textContent=label;a.hreflang=key;a.lang=key;a.title=title;
+  a.setAttribute('aria-label',title);a.style.cssText='padding:.25rem .4rem;text-decoration:none;border:1px solid transparent;border-radius:3px';
+  if(key===lang){a.setAttribute('aria-current','true');a.style.borderColor='currentColor';a.style.fontWeight='700';}
+  switcher.append(a);
+ }
+ const header=document.querySelector('.masthead') || document.querySelector('header');
+ if(header) header.append(switcher); else document.body.prepend(switcher);
+}
+})();
