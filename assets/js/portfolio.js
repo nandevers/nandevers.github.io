@@ -1,0 +1,2 @@
+document.querySelectorAll('.career-map a').forEach(link=>{link.addEventListener('click',()=>{const panel=document.querySelector(link.getAttribute('href'));if(panel)panel.open=true;});});
+const hashPanel=document.getElementById(location.hash.slice(1));if(hashPanel?.tagName==='DETAILS')hashPanel.open=true;
