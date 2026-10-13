@@ -29,8 +29,11 @@ The page includes a Python sketch aligned to Nixtla's documented APIs for Neural
 ## Files
 
 - index.html — route content and demo markup.
+- neuralforecast_hierarchical_demo.py — starter experiment using Nixtla's public TourismLarge dataset and reconciler examples.
 - ../assets/css/style.scss — shared GitHub Pages Minimal theme styling.
 - ../assets/js/forecasting.js — synthetic reconciliation calculations and interaction.
+
+Run the starter script with the packages listed at its top. It downloads public Tourism data and writes separate base and reconciled forecast CSVs; it contains no IFF data.
 
 ## References
 
