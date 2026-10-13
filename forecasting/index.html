@@ -50,7 +50,7 @@ permalink: /forecasting/
       <div class="forecast-demo-layout">
         <div class="forecast-table-wrap">
           <table class="forecast-table">
-            <thead><tr><th scope="col">Hierarchy</th><th scope="col">Base</th><th scope="col">Reconciled</th><th scope="col">Value profile</th></tr></thead>
+            <thead><tr><th scope="col">Hierarchy</th><th scope="col">Base</th><th scope="col">Current output</th><th scope="col">Value profile</th></tr></thead>
             <tbody id="forecast-rows"></tbody>
           </table>
         </div>
@@ -73,13 +73,22 @@ permalink: /forecasting/
       </div>
       <div class="code-block">
         <div class="code-heading"><span class="mono">NIXTLA · PYTHON WORKFLOW SKETCH</span><span class="mono">MODEL ≠ RECONCILER</span></div>
-        <pre><code>from neuralforecast import NeuralForecast
+        <pre><code>import numpy as np
+from neuralforecast import NeuralForecast
 from neuralforecast.models import NHITS, HINT
+from neuralforecast.losses.pytorch import GMM, sCRPS
 from hierarchicalforecast.core import HierarchicalReconciliation
 from hierarchicalforecast.methods import BottomUp, MinTrace
 
 # HINT combines a neural base model with hierarchy-aware reconciliation.
-base = NHITS(h=horizon, input_size=24, max_steps=...)
+quantiles = np.array([0.1, 0.5, 0.9])
+base = NHITS(
+    h=horizon,
+    input_size=24,
+    loss=GMM(n_components=10, quantiles=quantiles),
+    valid_loss=sCRPS(quantiles=quantiles),
+    max_steps=2000,
+)
 hint = HINT(
     h=horizon,
     S=S_df.drop(columns="unique_id").to_numpy(),
