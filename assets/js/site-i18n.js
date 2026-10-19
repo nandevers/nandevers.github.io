@@ -2,7 +2,7 @@
 (() => {
 'use strict';
 const rows = [
-["Read the Xper case study (English) ↗","Leia o estudo de caso do Xper (em inglês) ↗","Lee el caso de Xper (en inglés) ↗"],
+["Explore Xper: credit-modeling software (English) ↗","Conheça o Xper: software de modelagem de crédito (em inglês) ↗","Conoce Xper: software de modelado de crédito (en inglés) ↗"],
 ["Reinforcement learning","Aprendizado por reforço","Aprendizaje por refuerzo"],
 ["Interactive demo","Demonstração interativa","Demostración interactiva"],
 ["Research | Fernando Barbosa","Pesquisa | Fernando Barbosa","Investigación | Fernando Barbosa"],
