@@ -42,7 +42,7 @@ const cases=[
  {title:"Read an assigned case summary",detail:"Within the task’s approved read scope.",expected:true,broad:true,note:"Allowed: assigned record is in scope."},
  {title:"Change a case disposition",detail:"A write request outside this read-only task.",expected:false,broad:true,note:"Blocked: this task has no write grant.",broadNote:"Over-permission: write succeeds outside the task scope."},
  {title:"Read after the grant expires",detail:"The access token is past its 15-minute expiry.",expected:false,broad:false,note:"Blocked: the grant has expired."},
- {title:"Read after an administrator revokes access",detail:"A downstream tool still has a cached session.",expected:false,broad:false,note:"Blocked: revocation must take effect downstream."}
+ {title:"Read after an administrator revokes access",detail:"A downstream tool still has a cached session.",expected:false,broad:false,note:"Expected denial: verify revocation reaches the connected tool."}
 ];
 let mode="task";
 const results=document.getElementById("agent-test-results");
