@@ -2,6 +2,10 @@
 (() => {
 'use strict';
 const rows = [
+["Open-source contributions","Contribuições para código aberto","Contribuciones al código abierto"],
+["Fixed last-digit extraction, including trailing zeros, and repaired documentation CI. Both contributions accepted and merged upstream.","Corrigi a extração do último dígito, incluindo zeros finais, e o fluxo de integração contínua da documentação. Ambas as contribuições foram aceitas e integradas ao projeto original.","Corregí la extracción del último dígito, incluidos los ceros finales, y el flujo de integración continua de la documentación. Ambas contribuciones fueron aceptadas e integradas en el proyecto original."],
+["Extraction fix #18","Correção da extração #18","Corrección de extracción #18"],
+["CI fix #19","Correção de CI #19","Corrección de CI #19"],
 ["Explore Xper: credit-modeling software (English) ↗","Conheça o Xper: software de modelagem de crédito (em inglês) ↗","Conoce Xper: software de modelado de crédito (en inglés) ↗"],
 ["Reinforcement learning","Aprendizado por reforço","Aprendizaje por refuerzo"],
 ["Interactive demo","Demonstração interativa","Demostración interactiva"],
