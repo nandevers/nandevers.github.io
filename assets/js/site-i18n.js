@@ -2,6 +2,16 @@
 (() => {
 'use strict';
 const rows = [
+["Academic & applied research","Pesquisa acadêmica e aplicada","Investigación académica y aplicada"],
+["Academic research and applied AI experiments, from economics and sequential decisions to financial-report analysis.","Pesquisa acadêmica e experimentos de IA aplicada, da economia e das decisões sequenciais à análise de relatórios financeiros.","Investigación académica y experimentos de IA aplicada, desde la economía y las decisiones secuenciales hasta el análisis de informes financieros."],
+["Applied AI research","Pesquisa em IA aplicada","Investigación en IA aplicada"],
+["Independent project · 2026","Projeto independente · 2026","Proyecto independiente · 2026"],
+["Financial research & risk intelligence","Pesquisa financeira e inteligência de riscos","Investigación financiera e inteligencia de riesgos"],
+["Financial Research & Risk Intelligence Workbench","Bancada de pesquisa financeira e inteligência de riscos","Entorno de investigación financiera e inteligencia de riesgos"],
+["Explore original bank and insurer reports, inspect cited evidence, and compare recorded runs from five open models.","Explore relatórios originais de bancos e seguradoras, examine as evidências citadas e compare execuções registradas de cinco modelos abertos.","Explora informes originales de bancos y aseguradoras, examina la evidencia citada y compara ejecuciones registradas de cinco modelos abiertos."],
+["Reports. Evidence. Research.","Relatórios. Evidências. Pesquisa.","Informes. Evidencia. Investigación."],
+["Open models","Modelos abertos","Modelos abiertos"],
+["Explore the workbench ↗","Explore a bancada de pesquisa ↗","Explora el entorno de investigación ↗"],
 ["Open-source contributions","Contribuições para código aberto","Contribuciones al código abierto"],
 ["Fixed last-digit extraction, including trailing zeros, and repaired documentation CI. Both contributions accepted and merged upstream.","Corrigi a extração do último dígito, incluindo zeros finais, e o fluxo de integração contínua da documentação. Ambas as contribuições foram aceitas e integradas ao projeto original.","Corregí la extracción del último dígito, incluidos los ceros finales, y el flujo de integración continua de la documentación. Ambas contribuciones fueron aceptadas e integradas en el proyecto original."],
 ["Extraction fix #18","Correção da extração #18","Corrección de extracción #18"],
