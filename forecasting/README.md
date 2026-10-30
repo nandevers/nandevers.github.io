@@ -1,7 +1,8 @@
 # Hierarchical Forecasting Field Note
 
-**Live route:** https://nandevers.github.io/forecasting/  
-**Portfolio:** https://nandevers.github.io/
+**Live route:** https://nandolab.github.io/forecasting/
+
+**Portfolio:** https://nandolab.github.io/
 
 This route explains the coherence problem in hierarchical forecasting and includes a browser-side reconciliation illustration with invented values.
 
